@@ -2,541 +2,550 @@
 @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Montserrat:ital,wght@1,300&family=Open+Sans:wght@300&family=Quicksand:wght@300&family=Raleway:wght@100&family=Roboto:wght@100;300;400;500&display=swap');
 
 html {
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
 }
 
 .container {
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    position: relative;
-    min-width: 1000px;
-    max-width: 1000px;
-    height: 600px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 32px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  position: relative;
+  min-width: 1000px;
+  max-width: 1000px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 32px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
 .game {
-    width: 90%;
-    height: 80%;
-    background-color: #ff7b01;
-    border-radius: 45px;
-    /* border: 15px solid #ff7b01; */
-    border-top: 10px solid #ff7b01;
-    border-bottom: 10px solid #ff7b01;
-    border-left: 15px solid #ff7b01;
-    border-right: 15px solid #ff7b01;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  width: 90%;
+  height: 80%;
+  background-color: #ff7b01;
+  border-radius: 45px;
+  /* border: 15px solid #ff7b01; */
+  border-top: 10px solid #ff7b01;
+  border-bottom: 10px solid #ff7b01;
+  border-left: 15px solid #ff7b01;
+  border-right: 15px solid #ff7b01;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }
 
 .left__circle {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.5rem;
-    transform: translateY(-50%);
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  transform: translateY(-50%);
 }
 
-.left__circle i, .right__circle i {
-    font-size: 16px;
-    color: red;
+.left__circle i,
+.right__circle i {
+  font-size: 16px;
+  color: red;
 }
 
 .right__circle {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 1.5rem;
-    transform: translateY(-50%);
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+  transform: translateY(-50%);
 }
 
 .game__container {
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 45px;
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 45px;
+  box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
+    rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+  display: flex;
 }
 
 .game__container-left {
-    width: 28%;
-    height: 100%;
-    display: flex;
-    margin-top: 0.5rem;
+  width: 28%;
+  height: 100%;
+  display: flex;
+  margin-top: 0.5rem;
 }
 .leftSideBoxContainer,
-.rightSideBoxContainer{
-    width: 47%;
-    height: 100%;
-    padding-top: 5%;
+.rightSideBoxContainer {
+  width: 47%;
+  height: 100%;
+  padding-top: 5%;
 }
 
-.box{
-    width: 92%;
-    height: 21%;
-    padding: 4% 0 0 8%;
+.box {
+  width: 92%;
+  height: 21%;
+  padding: 4% 0 0 8%;
 }
-.btnGroup{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 65%;
+.btnGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 65%;
 }
-.animalCircleImg{
-    width: 65%;
-    height: 100%;
-    cursor: pointer;
+.animalCircleImg {
+  width: 65%;
+  height: 100%;
+  cursor: pointer;
 }
-.reduceBtn{
-    width: 30%;
-    height: 50%;
-    border-radius: 8px;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    color: white;
-    font-size: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+.reduceBtn {
+  width: 30%;
+  height: 50%;
+  border-radius: 8px;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
-.amountField{
-    width: 90%;
-    height: 25%;
-    padding: 5%;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+.amountField {
+  width: 90%;
+  height: 25%;
+  padding: 5%;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 .myValue,
-.maxValue{
-    width: 48%;
-    background: white;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    color: orange;
-    font-size: 1.5rem;
-    font-weight: 800;
+.maxValue {
+  width: 48%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  color: orange;
+  font-size: 1.5rem;
+  font-weight: 800;
 }
-.myValue{
-    border-start-start-radius: 5px;
-    border-end-start-radius: 5px;
+.myValue {
+  border-start-start-radius: 5px;
+  border-end-start-radius: 5px;
 }
-.maxValue{
-    border-start-end-radius: 5px;
-    border-end-end-radius: 5px;
+.maxValue {
+  border-start-end-radius: 5px;
+  border-end-end-radius: 5px;
 }
 
 .game__container-center {
-    width: 45%;
+  width: 45%;
 }
 
 .game__container-center-top {
-    width: 100%;
-    height: 75%;
-    margin-top: 1.5rem;
-    position: relative;
-    background-image: url(../images/square-buttons/sea-bg.png);
-    background-size: cover;
+  width: 100%;
+  height: 75%;
+  margin-top: 1.5rem;
+  position: relative;
+  background-image: url(../images/square-buttons/sea-bg.png);
+  background-size: cover;
 }
 
 .game__container-center-top .img1 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  top: 0;
 }
 
 .game__container-center-top .img2 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 10.5%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 10.5%;
+  top: 0;
 }
 
 .game__container-center-top .img3 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 21%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 21%;
+  top: 0;
 }
 
 .game__container-center-top .img4 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 31.5%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 31.5%;
+  top: 0;
 }
 
 .game__container-center-top .img5 {
-    position: absolute;
-    width: 16%;
-    height: 16%;
-    left: 42%;
-    top: 0;
-    transform: rotate(360deg);
+  position: absolute;
+  width: 16%;
+  height: 16%;
+  left: 42%;
+  top: 0;
+  transform: rotate(360deg);
 }
 
 .game__container-center-top .img6 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 58%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 58%;
+  top: 0;
 }
 
 .game__container-center-top .img7 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 68.5%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 68.5%;
+  top: 0;
 }
 
 .game__container-center-top .img8 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 79%;
-    top: 0;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 79%;
+  top: 0;
 }
 
 .game__container-center-top .img9 {
-    position: absolute;
-    width: 10.7%;
-    height: 10.7%;
-    right: 0%;
-    top: 0;
+  position: absolute;
+  width: 10.7%;
+  height: 10.7%;
+  right: 0%;
+  top: 0;
 }
 
 .game__container-center-top .img10 {
-    position: absolute;
-    width: 10.5%;
-    width: 10.5%;
-    right: 0;
-    top: 10.6%;
+  position: absolute;
+  width: 10.5%;
+  width: 10.5%;
+  right: 0;
+  top: 10.6%;
 }
 
 .game__container-center-top .img11 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 0;
-    top: 20.5%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 0;
+  top: 20.5%;
 }
 
 .game__container-center-top .img12 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 0;
-    top: 31%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 0;
+  top: 31%;
 }
 
 .game__container-center-top .img13 {
-    position: absolute;
-    width: 16%;
-    height: 16%;
-    right: 0%;
-    top: 41.5%;
+  position: absolute;
+  width: 16%;
+  height: 16%;
+  right: 0%;
+  top: 41.5%;
 }
 
 .game__container-center-top .img14 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 0%;
-    top: 57.4%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 0%;
+  top: 57.4%;
 }
 
 .game__container-center-top .img15 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 0%;
-    top: 67.9%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 0%;
+  top: 67.9%;
 }
 
 .game__container-center-top .img16 {
-    position: absolute;
-    width: 10.6%;
-    height: 10.6%;
-    right: 0%;
-    top: 78.4%;
+  position: absolute;
+  width: 10.6%;
+  height: 10.6%;
+  right: 0%;
+  top: 78.4%;
 }
 
 .game__container-center-top .img17 {
-    position: absolute;
-    width: 11%;
-    height: 11%;
-    right: 0%;
-    bottom: 0%;
+  position: absolute;
+  width: 11%;
+  height: 11%;
+  right: 0%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img18 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 10.8%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 10.8%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img19 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 21.3%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 21.3%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img20 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 31.8%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 31.8%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img21 {
-    position: absolute;
-    width: 16%;
-    height: 16%;
-    right: 42.3%;
-    bottom: 0%;
+  position: absolute;
+  width: 16%;
+  height: 16%;
+  right: 42.3%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img22 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 58.3%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 58.3%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img23 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    right: 68.7%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  right: 68.7%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img24 {
-    position: absolute;
-    width: 10.7%;
-    height: 10.7%;
-    right: 79.3%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.7%;
+  height: 10.7%;
+  right: 79.3%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img25 {
-    position: absolute;
-    width: 10.7%;
-    height: 10.7%;
-    left: 0%;
-    bottom: 0%;
+  position: absolute;
+  width: 10.7%;
+  height: 10.7%;
+  left: 0%;
+  bottom: 0%;
 }
 
 .game__container-center-top .img26 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 10.7%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 10.7%;
 }
 
 .game__container-center-top .img27 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 21.2%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 21.2%;
 }
 
 .game__container-center-top .img28 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 31.7%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 31.7%;
 }
 
 .game__container-center-top .img29 {
-    position: absolute;
-    width: 16%;
-    height: 16%;
-    left: 0%;
-    bottom: 42.2%;
+  position: absolute;
+  width: 16%;
+  height: 16%;
+  left: 0%;
+  bottom: 42.2%;
 }
 
 .game__container-center-top .img30 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 58.2%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 58.2%;
 }
 
 .game__container-center-top .img31 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 68.7%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 68.7%;
 }
 
 .game__container-center-top .img32 {
-    position: absolute;
-    width: 10.5%;
-    height: 10.5%;
-    left: 0%;
-    bottom: 79.2%;
+  position: absolute;
+  width: 10.5%;
+  height: 10.5%;
+  left: 0%;
+  bottom: 79.2%;
 }
 
 .game__container-center-bottom {
-    width: 100%;
-    height: 10%;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    margin-top: 1.4rem;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  height: 10%;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  margin-top: 1.4rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .game__container-center-bottom-item1 {
-    width: 39%;
-    margin-left: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  width: 39%;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .game__container-center-bottom-item1 p {
-    font-weight: 600;
-    color: #fff;
-    font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  font-size: 1rem;
 }
 
 .game__container-center-bottom-item1 span {
-    font-weight: 600;
-    color: #ff7b01;
-    font-size: 0.9rem;
-    padding: 4px 3px;
-    background-color: #fff;
-    border-radius: 4px;
+  font-weight: 600;
+  color: #ff7b01;
+  font-size: 0.9rem;
+  padding: 4px 3px;
+  background-color: #fff;
+  border-radius: 4px;
 }
 
 .game__container-center-bottom-item2 {
-    width: 29%;
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  width: 29%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .game__container-center-bottom-item2 p {
-    font-weight: 600;
-    font-size: 1rem;
-    color: #fff;
-
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
 }
 
 .game__container-center-bottom-item2-price {
-    width: 60px;
-    height: 22px;
-    background-color: #fff;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  width: 60px;
+  height: 22px;
+  background-color: #fff;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .game__container-center-bottom-item2-price span {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: #ff7b01;
-    padding-right: 3px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ff7b01;
+  padding-right: 3px;
 }
 
 .game__container-right {
-    width: 30%;
-    height: 100%;
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+  width: 30%;
+  height: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.game__container-right .box{
-    padding: 0px;
-    width: 93%;
-    height: 12.3%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
+.game__container-right .box {
+  padding: 0px;
+  width: 93%;
+  height: 12.3%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
-.game__container-right .box .animalCircleImg{
-    width: auto;
-    height: 100%;
-    margin-left: 0.5rem;
+.game__container-right .box .animalCircleImg {
+  width: auto;
+  height: 100%;
+  margin-left: 0.5rem;
 }
 
 .box-amount {
-    width: 100%;
-    height: 80%;
-    border-radius: 8px;
-    display: flex;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-    align-items: center;
-    gap : 5px
+  width: 100%;
+  height: 80%;
+  border-radius: 8px;
+  display: flex;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  align-items: center;
+  gap: 5px;
 }
 
 .box-amount-item:nth-child(1) {
-    margin-left: 9px;
+  margin-left: 9px;
 }
 
 .box-amount-item {
-    width: 40%;
-    height: 70%;
-    background-color: #fff;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+  width: 40%;
+  height: 70%;
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .box-amount-item span {
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: orange;
-    margin-right: 4px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: orange;
+  margin-right: 4px;
 }
 /* .game__container-right .box .amountField{
     width: 30%;
@@ -560,49 +569,49 @@ body {
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 } */
-.game__container-right .btn-box{
-    padding: 0px;
-    width: 50%;
-    height: 12.3%;
-    margin-left: 54%;
+.game__container-right .btn-box {
+  padding: 0px;
+  width: 50%;
+  height: 12.3%;
+  margin-left: 54%;
 }
-.game__container-right .btn-box .rotate{
-    height: 100%;
+.game__container-right .btn-box .rotate {
+  height: 100%;
 }
-.game__container-right .btn{
-    display: flex;
-    padding: 0px;
-    width: 100%;
-    height: 14%;
+.game__container-right .btn {
+  display: flex;
+  padding: 0px;
+  width: 100%;
+  height: 14%;
 }
 
-.game__container-right .btn img{
-    height: 100%;
+.game__container-right .btn img {
+  height: 100%;
 }
 
 .game__container-right .btn .image1 {
-    margin-left: 2rem;
-    margin-right: 2.5rem;
+  margin-left: 2rem;
+  margin-right: 2.5rem;
 }
 
-.game__container-right .get-coin{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0px;
-    width: 75%;
-    height: 48px;
-    background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-    border-radius: 10px;
-    gap: 4px;
-    margin-top: 0.8rem;
-    margin-left: 2rem;
+.game__container-right .get-coin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  width: 75%;
+  height: 48px;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  border-radius: 10px;
+  gap: 4px;
+  margin-top: 0.8rem;
+  margin-left: 2rem;
 }
-.game__container-right .get-coin img{
-    width: 15%;
+.game__container-right .get-coin img {
+  width: 15%;
 }
-.game__container-right .get-coin span{
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: white;
-} 
+.game__container-right .get-coin span {
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: white;
+}
