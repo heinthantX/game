@@ -167,6 +167,9 @@ body {
   position: relative;
   background-image: url(../images/square-buttons/sea-bg.png);
   background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .game__container-center-top .img1 {
@@ -614,4 +617,80 @@ body {
   font-weight: 600;
   font-size: 1.5rem;
   color: white;
+}
+
+.left__circle i,
+.right__circle i {
+  font-size: 16px;
+  color: rgb(253, 38, 38);
+  animation: animate 4s ease infinite;
+}
+
+@keyframes animate {
+  0% {
+    color: rgb(253, 38, 38);
+  }
+  45% {
+    color: rgb(253, 38, 38);
+  }
+  70% {
+    color: greenyellow;
+  }
+  100% {
+    color: greenyellow;
+  }
+}
+
+.left__circle i:nth-child(1),
+.right__circle i:nth-child(1) {
+  animation-delay: 0s;
+}
+.left__circle i:nth-child(2),
+.right__circle i:nth-child(2) {
+  animation-delay: 0.3s;
+}
+.left__circle i:nth-child(3),
+.right__circle i:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.left__circle i:nth-child(4),
+.right__circle i:nth-child(4) {
+  animation-delay: 0.9s;
+}
+.left__circle i:nth-child(5),
+.right__circle i:nth-child(5) {
+  animation-delay: 1.2s;
+}
+.left__circle i:nth-child(6),
+.right__circle i:nth-child(6) {
+  animation-delay: 1.5s;
+}
+.left__circle i:nth-child(7),
+.right__circle i:nth-child(7) {
+  animation-delay: 1.8s;
+}
+
+.myValue {
+  border-start-start-radius: 5px;
+  border-end-start-radius: 5px;
+  border-start-end-radius: 2.5px;
+  border-end-end-radius: 2.5px;
+}
+.maxValue {
+  border-start-end-radius: 5px;
+  border-end-end-radius: 5px;
+  border-start-start-radius: 2.5px;
+  border-end-start-radius: 2.5px;
+}
+
+.count-down {
+  color: #ffe600;
+  font-size: 60px;
+  font-weight: 400;
+  display: none;
+}
+
+#startAudio,
+#endAudio {
+  display: none;
 }
