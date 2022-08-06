@@ -12,6 +12,7 @@ const clearBtn = document.getElementById('clear-btn');
 const centerImg = document.getElementsByClassName('img');
 const jackpot = document.getElementById('jackpot');
 const reBet = document.getElementById('reBet');
+const win = document.getElementById('win');
 
 let bet = {
   betList: [
@@ -206,14 +207,12 @@ function centerAnimation(x, random) {
   }, x);
 }
 
-let clonedBet;
+let clonedBetList;
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
-  let betList = [...bet.betList];
-  clonedBet = Object.assign({}, bet);
-  clonedBet.betList = betList;
-
+  clonedBetList = JSON.parse(JSON.stringify(bet.betList));
+  win.textContent = 0;
   if (won == 0) {
     if (totalBet) {
       alert('deal');
@@ -222,7 +221,8 @@ function calculateWinOrLose(i) {
     }
   }
   if (won > 0) {
-    alert(`Yay, you win ${won}`);
+    alert(`Yay.., you win ${won}!`);
+    win.textContent = won;
   } else {
     alert(`You lose ${Math.abs(won)}`);
   }
@@ -238,13 +238,12 @@ function clearALlValue() {
 }
 
 reBet.addEventListener('click', () => {
-  if (gameState || !clonedBet) return;
-  let betList = [...clonedBet.betList];
-  bet = Object.assign({}, clonedBet);
-  bet.betList = betList;
+  if (gameState || !clonedBetList) return;
+  if (bet.betList.some((v) => v.myValue != 0)) return;
+  bet.betList = JSON.parse(JSON.stringify(clonedBetList));
   for (let i in bet.betList) {
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    total.textContent = bet.total();
-    jackpot.textContent -= bet.total();
   }
+  total.textContent = bet.total();
+  jackpot.textContent -= bet.total();
 });
