@@ -217,18 +217,16 @@ function calculateWinOrLose(i) {
   if (won == 0) {
     if (totalBet) {
       alert('deal');
-      clearALlValue();
     } else {
       return;
     }
   }
   if (won > 0) {
     alert(`Yay, you win ${won}`);
-    clearALlValue();
   } else {
     alert(`You lose ${Math.abs(won)}`);
-    clearALlValue();
   }
+  clearALlValue();
 }
 
 function clearALlValue() {
