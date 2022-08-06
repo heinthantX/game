@@ -9,7 +9,11 @@ const endAudio = document.getElementById('endAudio');
 
 const clearBtn = document.getElementById('clear-btn');
 
-const bet = {
+const centerImg = document.getElementsByClassName('img');
+const jackpot = document.getElementById('jackpot');
+const reBet = document.getElementById('reBet');
+
+let bet = {
   betList: [
     {
       name: 'dog',
@@ -69,6 +73,42 @@ const bet = {
   },
 };
 
+const indexMap = {
+  0: 8,
+  8: 8,
+  16: 8,
+  24: 8,
+  4: 9,
+  12: 9,
+  20: 9,
+  28: 9,
+  1: 0,
+  2: 0,
+  3: 0,
+  5: 4,
+  6: 4,
+  7: 4,
+  9: 5,
+  10: 5,
+  11: 5,
+  13: 6,
+  14: 6,
+  15: 6,
+  17: 7,
+  18: 7,
+  19: 7,
+  21: 1,
+  22: 1,
+  23: 1,
+  25: 2,
+  26: 2,
+  27: 2,
+  29: 3,
+  30: 3,
+  31: 3,
+};
+Object.freeze(indexMap);
+
 let gameState = 'a';
 for (let i = 0; i < 12; i++) {
   plusBtn[i].addEventListener('click', () => {
@@ -77,6 +117,7 @@ for (let i = 0; i < 12; i++) {
     bet.betList[i].myValue = myValue < 50 ? myValue + 1 : myValue;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
     total.textContent = bet.total();
+    jackpot.textContent--;
   });
 
   reduceBtn[i].addEventListener('click', () => {
@@ -85,14 +126,19 @@ for (let i = 0; i < 12; i++) {
     bet.betList[i].myValue = myValue > 0 ? myValue - 1 : myValue;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
     total.textContent = bet.total();
+    jackpot.textContent =
+      myValue > 0 ? parseInt(jackpot.textContent) + 1 : jackpot.textContent;
   });
 }
 
 let intervalId;
+let interval2Id;
+let i = 0;
 startBtn.addEventListener('click', () => {
   if (intervalId) return;
+  let random = Math.floor(Math.random() * centerImg.length);
   gameState = null;
-  let count = 30;
+  let count = 15;
   const countDown = document.querySelector('.count-down');
   startAudio.play();
   intervalId = setInterval(() => {
@@ -108,6 +154,16 @@ startBtn.addEventListener('click', () => {
       clearInterval(intervalId);
       intervalId = null;
       countDown.style.display = 'none';
+
+      centerAnimation(100, null);
+      setTimeout(() => {
+        clearInterval(interval2Id);
+        centerAnimation(200, null);
+      }, 1000 * 7);
+      setTimeout(() => {
+        clearInterval(interval2Id);
+        centerAnimation(400, random);
+      }, 1000 * 10);
     }
     count--;
   }, 1000);
@@ -115,9 +171,82 @@ startBtn.addEventListener('click', () => {
 
 clearBtn.addEventListener('click', () => {
   if (gameState) return;
+  jackpot.textContent = parseInt(jackpot.textContent) + bet.total();
+  clearALlValue();
+});
+
+function centerAnimation(x, random) {
+  interval2Id = setInterval(() => {
+    centerImg[i].classList.add('animate');
+
+    if (random && random + 5 > i && random - 5 < i) {
+      let animateId = setInterval(() => {
+        if (centerImg[i - 1].className.includes('animate')) {
+          centerImg[i - 1].classList.remove('animate');
+        } else {
+          centerImg[i - 1].classList.add('animate');
+        }
+      }, 150);
+      setTimeout(() => {
+        clearInterval(animateId);
+        centerImg[i - 1].classList.remove('animate');
+        calculateWinOrLose(i - 1);
+      }, 3000);
+      clearInterval(interval2Id);
+    }
+    if (i !== 0) {
+      centerImg[i - 1].classList.remove('animate');
+    } else {
+      centerImg[31].classList.remove('animate');
+    }
+    i++;
+    if (i == 32) {
+      i = 0;
+    }
+  }, x);
+}
+
+let clonedBet;
+function calculateWinOrLose(i) {
+  let totalBet = bet.total();
+  let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
+  let betList = [...bet.betList];
+  clonedBet = Object.assign({}, bet);
+  clonedBet.betList = betList;
+
+  if (won == 0) {
+    if (totalBet) {
+      alert('deal');
+      clearALlValue();
+    } else {
+      return;
+    }
+  }
+  if (won > 0) {
+    alert(`Yay, you win ${won}`);
+    clearALlValue();
+  } else {
+    alert(`You lose ${Math.abs(won)}`);
+    clearALlValue();
+  }
+}
+
+function clearALlValue() {
   for (let i in bet.betList) {
     bet.betList[i].myValue = 0;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
     total.textContent = bet.total();
+  }
+}
+
+reBet.addEventListener('click', () => {
+  if (gameState || !clonedBet) return;
+  let betList = [...clonedBet.betList];
+  bet = Object.assign({}, clonedBet);
+  bet.betList = betList;
+  for (let i in bet.betList) {
+    myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
+    total.textContent = bet.total();
+    jackpot.textContent -= bet.total();
   }
 });
