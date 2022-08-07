@@ -135,8 +135,10 @@ for (let i = 0; i < 12; i++) {
 let intervalId;
 let interval2Id;
 let i = 0;
+let canStart;
 startBtn.addEventListener('click', () => {
-  if (intervalId) return;
+  if (intervalId || canStart) return;
+  canStart = 'a';
   let random = Math.floor(Math.random() * centerImg.length);
   gameState = null;
   let count = 15;
@@ -209,6 +211,7 @@ function centerAnimation(x, random) {
 
 let clonedBetList;
 function calculateWinOrLose(i) {
+  canStart = null;
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
   clonedBetList = JSON.parse(JSON.stringify(bet.betList));
@@ -223,6 +226,7 @@ function calculateWinOrLose(i) {
   if (won > 0) {
     alert(`Yay.., you win ${won}!`);
     win.textContent = won;
+    total.textContent = parseInt(total.textContent) + won;
   } else {
     alert(`You lose ${Math.abs(won)}`);
   }

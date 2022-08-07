@@ -33,10 +33,9 @@ body {
   width: 90%;
   height: 80%;
   background-color: #ff7b01;
-  border-radius: 45px;
-  /* border: 15px solid #ff7b01; */
-  border-top: 10px solid #ff7b01;
-  border-bottom: 10px solid #ff7b01;
+  border-radius: 50px;
+  border-top: 9px solid #ff7b01;
+  border-bottom: 9px solid #ff7b01;
   border-left: 15px solid #ff7b01;
   border-right: 15px solid #ff7b01;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -74,9 +73,13 @@ body {
   width: 100%;
   height: 100%;
   background-color: #fff;
-  border-radius: 45px;
+  border-radius: 50px;
   box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset,
     rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
+  /* box-shadow: 6px -6px 17px 6px rgba(0, 0, 0, 0.6) inset;
+  -webkit-box-shadow: 6px -6px 17px 6px rgba(0, 0, 0, 0.6) inset;
+  -moz-box-shadow: 6px -6px 17px 6px rgba(0, 0, 0, 0.6) inset; */
   display: flex;
 }
 
@@ -593,8 +596,8 @@ body {
 }
 
 .game__container-right .btn .image1 {
-  margin-left: 2rem;
-  margin-right: 2.5rem;
+  margin-left: 2.2rem;
+  margin-right: 1.7rem;
 }
 
 .game__container-right .get-coin {
@@ -619,11 +622,25 @@ body {
   color: white;
 }
 
+.left__circle i::after,
+.right__circle i::after {
+  content: '';
+  position: absolute;
+  border-top: 3px solid rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 70%;
+  height: 70%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 .left__circle i,
 .right__circle i {
   font-size: 16px;
   color: rgb(253, 38, 38);
   animation: animate 4s ease infinite;
+  position: relative;
 }
 
 @keyframes animate {
