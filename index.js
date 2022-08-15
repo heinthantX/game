@@ -1,11 +1,9 @@
-const total = document.getElementById('total');
+const coin = document.getElementById('coin');
 const plusBtn = document.getElementsByClassName('plus-btn');
 const myValueDiv = document.getElementsByClassName('myValue');
 const reduceBtn = document.getElementsByClassName('reduceBtn');
 
 const startBtn = document.getElementById('start-btn');
-const startAudio = document.getElementById('startAudio');
-const endAudio = document.getElementById('endAudio');
 
 const clearBtn = document.getElementById('clear-btn');
 
@@ -13,6 +11,19 @@ const centerImg = document.getElementsByClassName('img');
 const jackpot = document.getElementById('jackpot');
 const reBet = document.getElementById('reBet');
 const win = document.getElementById('win');
+const countDown = document.getElementById('count-down');
+
+const menuPlayBtn = document.getElementById('menuPlayBtn');
+const menuQuitBtn = document.getElementById('menuQuitBtn');
+const menuBoardContainer = document.querySelector('.menu-board__container');
+const gameContainer = document.querySelector('.game__container');
+
+const clickAudio = new Audio(
+  './assets/audio/Jewel Button Click (mp3cut.net).wav'
+);
+const startAudio = new Audio('./assets/audio/children.wav');
+const endAudio = new Audio('./assets/audio/Spell of Magic Potion 6.wav');
+const clockAudio = new Audio('./assets/audio/ClockTick8CUSlow SDT2049003.wav');
 
 let bet = {
   betList: [
@@ -113,23 +124,23 @@ Object.freeze(indexMap);
 let gameState = 'a';
 for (let i = 0; i < 12; i++) {
   plusBtn[i].addEventListener('click', () => {
+    clickAudio.play();
     if (gameState) return;
     const { myValue } = bet.betList[i];
     bet.betList[i].myValue = myValue < 50 ? myValue + 1 : myValue;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    total.textContent = bet.total();
-    jackpot.textContent--;
+    coin.textContent--;
   });
 
-  reduceBtn[i].addEventListener('click', () => {
-    if (gameState) return;
-    const { myValue } = bet.betList[i];
-    bet.betList[i].myValue = myValue > 0 ? myValue - 1 : myValue;
-    myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    total.textContent = bet.total();
-    jackpot.textContent =
-      myValue > 0 ? parseInt(jackpot.textContent) + 1 : jackpot.textContent;
-  });
+  // reduceBtn[i].addEventListener('click', () => {
+  //   clickAudio.play();
+  //   if (gameState) return;
+  //   const { myValue } = bet.betList[i];
+  //   bet.betList[i].myValue = myValue > 0 ? myValue - 1 : myValue;
+  //   myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
+  //   coin.textContent =
+  //     myValue > 0 ? parseInt(jackpot.textContent) + 1 : jackpot.textContent;
+  // });
 }
 
 let intervalId;
@@ -137,21 +148,31 @@ let interval2Id;
 let i = 0;
 let canStart;
 startBtn.addEventListener('click', () => {
+  clickAudio.play();
   if (intervalId || canStart) return;
   canStart = 'a';
-  let random = Math.floor(Math.random() * centerImg.length);
+  let random = Math.floor(Math.random() * centerImg.length - 1);
   gameState = null;
-  let count = 15;
-  const countDown = document.querySelector('.count-down');
-  startAudio.play();
+  let count = 30;
+  startAudio.load();
+  const circleEle = document.getElementById('circle');
+  const secondSpan = document.querySelector('#count-down span');
   intervalId = setInterval(() => {
-    countDown.textContent = count;
     countDown.style.display = 'block';
+    secondSpan.textContent = count;
+    let radius = circleEle.r.baseVal.value;
+    let circumference = radius * 2 * Math.PI;
+    let barLength = (count * circumference) / 30;
+    circleEle.setAttribute('stroke-dasharray', barLength + ' ' + circumference);
+    startAudio.play();
     if (count == 0) {
-      startAudio.pause();
-      countDown.textContent = 'GO';
-      endAudio.play();
+      secondSpan.textContent = 'GO';
+      clockAudio.pause();
       gameState = 'a';
+    }
+    if (count == 9) {
+      clockAudio.load();
+      clockAudio.play();
     }
     if (count < 0) {
       clearInterval(intervalId);
@@ -173,16 +194,31 @@ startBtn.addEventListener('click', () => {
 });
 
 clearBtn.addEventListener('click', () => {
+  clickAudio.play();
   if (gameState) return;
-  jackpot.textContent = parseInt(jackpot.textContent) + bet.total();
+  coin.textContent = parseInt(coin.textContent) + bet.total();
   clearALlValue();
+  stop();
 });
+
+function stop() {
+  countDown.style.display = 'none';
+  clockAudio.pause();
+  startAudio.pause();
+  clearInterval(intervalId);
+  gameState = null;
+  intervalId = null;
+  canStart = null;
+}
 
 function centerAnimation(x, random) {
   interval2Id = setInterval(() => {
     centerImg[i].classList.add('animate');
 
     if (random && random + 5 > i && random - 5 < i) {
+      clearInterval(interval2Id);
+      endAudio.play();
+      startAudio.pause();
       let animateId = setInterval(() => {
         if (centerImg[i - 1].className.includes('animate')) {
           centerImg[i - 1].classList.remove('animate');
@@ -195,7 +231,6 @@ function centerAnimation(x, random) {
         centerImg[i - 1].classList.remove('animate');
         calculateWinOrLose(i - 1);
       }, 3000);
-      clearInterval(interval2Id);
     }
     if (i !== 0) {
       centerImg[i - 1].classList.remove('animate');
@@ -226,7 +261,7 @@ function calculateWinOrLose(i) {
   if (won > 0) {
     alert(`Yay.., you win ${won}!`);
     win.textContent = won;
-    total.textContent = parseInt(total.textContent) + won;
+    coin.textContent = parseInt(coin.textContent) + won;
   } else {
     alert(`You lose ${Math.abs(won)}`);
   }
@@ -237,17 +272,51 @@ function clearALlValue() {
   for (let i in bet.betList) {
     bet.betList[i].myValue = 0;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    total.textContent = bet.total();
   }
 }
 
 reBet.addEventListener('click', () => {
-  if (gameState || !clonedBetList) return;
-  if (bet.betList.some((v) => v.myValue != 0)) return;
-  bet.betList = JSON.parse(JSON.stringify(clonedBetList));
-  for (let i in bet.betList) {
-    myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-  }
-  total.textContent = bet.total();
-  jackpot.textContent -= bet.total();
+  clickAudio.play();
+  // if (gameState || !clonedBetList) return;
+  // if (bet.betList.some((v) => v.myValue != 0)) return;
+  // bet.betList = JSON.parse(JSON.stringify(clonedBetList));
+  // for (let i in bet.betList) {
+  //   myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
+  // }
+  // coin.textContent -= bet.total();
+  // jackpot.textContent -= bet.total();
+  if (gameState) return;
+  coin.textContent = parseInt(coin.textContent) + bet.total();
+  clearALlValue();
 });
+
+menuPlayBtn.addEventListener('click', () => {
+  clickAudio.play();
+  const startLoading = document.querySelector('.start-loading');
+  const loadingBar = document.querySelector('.loading');
+  startLoading.style.visibility = 'visible';
+  loadingBar.classList.add('loadingAnimation');
+  setTimeout(() => {
+    menuBoardContainer.style.display = 'none';
+    gameContainer.style.display = 'flex';
+    startLoading.style.visibility = 'hidden';
+    loadingBar.classList.remove('loadingAnimation');
+  }, 1000 * 12);
+});
+
+const volumeBtn = document.getElementById('volumeBtn');
+const achievementBtn = document.getElementById('achievementBtn');
+const settingBtn = document.getElementById('settingBtn');
+volumeBtn.onclick = () => {
+  clickAudio.play();
+};
+achievementBtn.onclick = () => {
+  clickAudio.play();
+};
+settingBtn.onclick = () => {
+  clickAudio.play();
+};
+
+menuQuitBtn.onclick = () => {
+  clickAudio.play();
+};
