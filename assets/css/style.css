@@ -3,6 +3,7 @@
 
 html {
   font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
 body {
@@ -87,7 +88,7 @@ body {
 }
 
 .menu-board__container {
-  background-image: url('../images/menu-board/menuBoardBg.jpg');
+  background-image: url('../images/menu-board/processed-057daf40-fd87-4482-8246-f6a08de38dd7_9pNX3tMT.jpeg');
   background-size: 100%;
   display: flex;
   flex-direction: column;
@@ -101,13 +102,15 @@ body {
   width: 28%;
   height: 100%;
   display: flex;
-  margin-top: 0.5rem;
 }
 .leftSideBoxContainer,
 .rightSideBoxContainer {
   width: 47%;
   height: 100%;
-  padding-top: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .box {
@@ -176,12 +179,15 @@ body {
 
 .game__container-center {
   width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .game__container-center-top {
   width: 100%;
   height: 75%;
-  margin-top: 1.5rem;
   position: relative;
   background-image: url(../images/square-buttons/sea-bg.png);
   background-size: cover;
@@ -449,13 +455,15 @@ body {
 
 .game__container-center-bottom {
   width: 100%;
-  height: 10%;
+  height: 12%;
   background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
   margin-top: 1.4rem;
-  border-radius: 8px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 .game__container-center-bottom-item1 {
@@ -467,18 +475,14 @@ body {
 }
 
 .game__container-center-bottom-item1 p {
-  font-weight: 600;
   color: #fff;
-  font-size: 1rem;
 }
 
 .game__container-center-bottom-item1 span {
-  font-weight: 600;
   color: #ff7b01;
-  font-size: 0.9rem;
-  padding: 4px 3px;
+  padding: 6px 3px;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
 .game__container-center-bottom-item2 {
@@ -489,35 +493,30 @@ body {
 }
 
 .game__container-center-bottom-item2 p {
-  font-weight: 600;
-  font-size: 1rem;
   color: #fff;
 }
 
 .game__container-center-bottom-item2-price {
   width: 60px;
-  height: 22px;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
 .game__container-center-bottom-item2-price span {
-  font-size: 0.9rem;
-  font-weight: 600;
   color: #ff7b01;
-  padding-right: 3px;
+  padding: 6px 3px;
 }
 
 .game__container-right {
   width: 30%;
   height: 100%;
-  margin-top: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 .game__container-right .box {
   padding: 0px;
@@ -531,12 +530,12 @@ body {
 }
 .game__container-right .box .animalCircleImg {
   width: auto;
-  height: 100%;
+  height: 104.5%;
   margin-left: 0.5rem;
 }
 
 .box-amount {
-  width: 100%;
+  width: 50%;
   height: 80%;
   border-radius: 8px;
   display: flex;
@@ -597,7 +596,7 @@ body {
 .game__container-right .btn-box {
   padding: 0px;
   width: 50%;
-  height: 13%;
+  height: 14%;
   margin-left: 53%;
 }
 .game__container-right .btn-box .rotate {
@@ -629,7 +628,7 @@ body {
   background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
   border-radius: 10px;
   gap: 4px;
-  margin-top: 0.8rem;
+  margin-top: 0.2rem;
   margin-left: 2rem;
 }
 .game__container-right .get-coin img {
@@ -752,29 +751,6 @@ body {
   position: absolute;
   left: 0;
   top: 0;
-}
-
-@media (min-width: 1400px) {
-  .container {
-    width: 1200px;
-    height: 700px;
-  }
-
-  .left__circle {
-    left: 1.3rem;
-  }
-
-  .right__circle {
-    right: 1.3rem;
-  }
-
-  .box-amount {
-    gap: 11px;
-  }
-
-  .game__container-right .get-coin {
-    height: 60px;
-  }
 }
 
 .menu-first_con {
@@ -909,4 +885,50 @@ body {
   bottom: 150%;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.buttonAnimate {
+  animation: btnAnimate 300ms;
+}
+
+@keyframes btnAnimate {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(0.8);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (min-width: 1400px) {
+  html {
+    font-size: 18px;
+  }
+
+  .container {
+    width: 1200px;
+    height: 700px;
+  }
+
+  .left__circle {
+    left: 1.3rem;
+  }
+
+  .right__circle {
+    right: 1.3rem;
+  }
+
+  .box-amount {
+    gap: 11px;
+  }
+
+  .game__container-right .get-coin {
+    height: 60px;
+  }
 }

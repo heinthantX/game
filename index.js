@@ -24,6 +24,9 @@ const clickAudio = new Audio(
 const startAudio = new Audio('./assets/audio/children.wav');
 const endAudio = new Audio('./assets/audio/Spell of Magic Potion 6.wav');
 const clockAudio = new Audio('./assets/audio/ClockTick8CUSlow SDT2049003.wav');
+const centerAnimationAudio = new Audio(
+  './assets/audio/Bubble 01 (mp3cut.net).wav'
+);
 
 let bet = {
   betList: [
@@ -121,11 +124,15 @@ const indexMap = {
 };
 Object.freeze(indexMap);
 
-let gameState = 'a';
+let canBet = false;
 for (let i = 0; i < 12; i++) {
   plusBtn[i].addEventListener('click', () => {
     clickAudio.play();
-    if (gameState) return;
+    plusBtn[i].classList.add('buttonAnimate');
+    setTimeout(() => {
+      plusBtn[i].classList.remove('buttonAnimate');
+    }, 310);
+    if (!canBet) return;
     const { myValue } = bet.betList[i];
     bet.betList[i].myValue = myValue < 50 ? myValue + 1 : myValue;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
@@ -134,7 +141,7 @@ for (let i = 0; i < 12; i++) {
 
   // reduceBtn[i].addEventListener('click', () => {
   //   clickAudio.play();
-  //   if (gameState) return;
+  //   if (!canBet) return;
   //   const { myValue } = bet.betList[i];
   //   bet.betList[i].myValue = myValue > 0 ? myValue - 1 : myValue;
   //   myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
@@ -146,17 +153,26 @@ for (let i = 0; i < 12; i++) {
 let intervalId;
 let interval2Id;
 let i = 0;
-let canStart;
+let canStart = true;
 startBtn.addEventListener('click', () => {
   clickAudio.play();
-  if (intervalId || canStart) return;
-  canStart = 'a';
+  startBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    startBtn.classList.remove('buttonAnimate');
+  }, 310);
+
+  if (intervalId || !canStart) return;
+  canStart = false;
   let random = Math.floor(Math.random() * centerImg.length - 1);
-  gameState = null;
+  canBet = true;
   let count = 30;
-  startAudio.load();
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
+  clockAudio.load();
+  clockAudio.play();
+  clockAudio.addEventListener('ended', () => {
+    clockAudio.play();
+  });
   intervalId = setInterval(() => {
     countDown.style.display = 'block';
     secondSpan.textContent = count;
@@ -164,22 +180,17 @@ startBtn.addEventListener('click', () => {
     let circumference = radius * 2 * Math.PI;
     let barLength = (count * circumference) / 30;
     circleEle.setAttribute('stroke-dasharray', barLength + ' ' + circumference);
-    startAudio.play();
     if (count == 0) {
       secondSpan.textContent = 'GO';
       clockAudio.pause();
-      gameState = 'a';
-    }
-    if (count == 9) {
-      clockAudio.load();
-      clockAudio.play();
+      canBet = false;
     }
     if (count < 0) {
       clearInterval(intervalId);
       intervalId = null;
       countDown.style.display = 'none';
 
-      centerAnimation(100, null);
+      centerAnimation(110, null);
       setTimeout(() => {
         clearInterval(interval2Id);
         centerAnimation(200, null);
@@ -195,7 +206,11 @@ startBtn.addEventListener('click', () => {
 
 clearBtn.addEventListener('click', () => {
   clickAudio.play();
-  if (gameState) return;
+  clearBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    clearBtn.classList.remove('buttonAnimate');
+  }, 310);
+  if (!canBet) return;
   coin.textContent = parseInt(coin.textContent) + bet.total();
   clearALlValue();
   stop();
@@ -204,21 +219,21 @@ clearBtn.addEventListener('click', () => {
 function stop() {
   countDown.style.display = 'none';
   clockAudio.pause();
-  startAudio.pause();
   clearInterval(intervalId);
-  gameState = null;
+  canBet = false;
   intervalId = null;
-  canStart = null;
+  canStart = true;
 }
 
 function centerAnimation(x, random) {
   interval2Id = setInterval(() => {
+    centerAnimationAudio.load();
+    centerAnimationAudio.play();
     centerImg[i].classList.add('animate');
 
     if (random && random + 5 > i && random - 5 < i) {
       clearInterval(interval2Id);
       endAudio.play();
-      startAudio.pause();
       let animateId = setInterval(() => {
         if (centerImg[i - 1].className.includes('animate')) {
           centerImg[i - 1].classList.remove('animate');
@@ -226,11 +241,11 @@ function centerAnimation(x, random) {
           centerImg[i - 1].classList.add('animate');
         }
       }, 150);
+      calculateWinOrLose(i - 1);
       setTimeout(() => {
         clearInterval(animateId);
         centerImg[i - 1].classList.remove('animate');
-        calculateWinOrLose(i - 1);
-      }, 3000);
+      }, 1000 * 7);
     }
     if (i !== 0) {
       centerImg[i - 1].classList.remove('animate');
@@ -244,12 +259,12 @@ function centerAnimation(x, random) {
   }, x);
 }
 
-let clonedBetList;
+// let clonedBetList;
 function calculateWinOrLose(i) {
-  canStart = null;
+  canStart = true;
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
-  clonedBetList = JSON.parse(JSON.stringify(bet.betList));
+  // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   win.textContent = 0;
   if (won == 0) {
     if (totalBet) {
@@ -277,7 +292,11 @@ function clearALlValue() {
 
 reBet.addEventListener('click', () => {
   clickAudio.play();
-  // if (gameState || !clonedBetList) return;
+  reBet.classList.add('buttonAnimate');
+  setTimeout(() => {
+    reBet.classList.remove('buttonAnimate');
+  }, 310);
+  // if (!canBet || !clonedBetList) return;
   // if (bet.betList.some((v) => v.myValue != 0)) return;
   // bet.betList = JSON.parse(JSON.stringify(clonedBetList));
   // for (let i in bet.betList) {
@@ -285,13 +304,17 @@ reBet.addEventListener('click', () => {
   // }
   // coin.textContent -= bet.total();
   // jackpot.textContent -= bet.total();
-  if (gameState) return;
+  if (!canBet) return;
   coin.textContent = parseInt(coin.textContent) + bet.total();
   clearALlValue();
 });
 
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
+  menuPlayBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    menuPlayBtn.classList.remove('buttonAnimate');
+  }, 310);
   const startLoading = document.querySelector('.start-loading');
   const loadingBar = document.querySelector('.loading');
   startLoading.style.visibility = 'visible';
@@ -301,6 +324,11 @@ menuPlayBtn.addEventListener('click', () => {
     gameContainer.style.display = 'flex';
     startLoading.style.visibility = 'hidden';
     loadingBar.classList.remove('loadingAnimation');
+    startAudio.load();
+    startAudio.play();
+    startAudio.addEventListener('ended', () => {
+      startAudio.play();
+    });
   }, 1000 * 12);
 });
 
@@ -309,14 +337,30 @@ const achievementBtn = document.getElementById('achievementBtn');
 const settingBtn = document.getElementById('settingBtn');
 volumeBtn.onclick = () => {
   clickAudio.play();
+  volumeBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    volumeBtn.classList.remove('buttonAnimate');
+  }, 310);
 };
 achievementBtn.onclick = () => {
   clickAudio.play();
+  achievementBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    achievementBtn.classList.remove('buttonAnimate');
+  }, 310);
 };
 settingBtn.onclick = () => {
   clickAudio.play();
+  settingBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    settingBtn.classList.remove('buttonAnimate');
+  }, 310);
 };
 
 menuQuitBtn.onclick = () => {
   clickAudio.play();
+  menuQuitBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    menuQuitBtn.classList.remove('buttonAnimate');
+  }, 310);
 };
