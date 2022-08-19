@@ -19,6 +19,9 @@ const menuBoardContainer = document.querySelector('.menu-board__container');
 const gameContainer = document.querySelector('.game__container');
 const backToMenuBtn = document.querySelector('.backToMenuBtn');
 const winLoseContainer = document.querySelector('.win-lose-container');
+const profile = document.querySelector('.profile');
+const coinCon = document.querySelector('.coin-con');
+const getCoin = document.querySelector('.get-coin');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -126,6 +129,11 @@ const indexMap = {
 };
 Object.freeze(indexMap);
 
+// const land = [1, 2, 3, 21, 22, 23, 25, 26, 27, 29, 30, 31];
+// const aqua = [4, 12, 20, 28, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19];
+const land = [0, 1, 2, 3];
+const aqua = [4, 5, 6, 7, 9];
+
 let canBet = false;
 for (let i = 0; i < 12; i++) {
   plusBtn[i].addEventListener('click', () => {
@@ -167,7 +175,7 @@ startBtn.addEventListener('click', () => {
   canStart = false;
   let random = Math.floor(Math.random() * centerImg.length - 1);
   canBet = true;
-  let count = 30;
+  let count = 3;
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
   clockAudio.load();
@@ -232,38 +240,38 @@ function stop() {
 
 function centerAnimation(x, random) {
   interval2Id = setInterval(() => {
-    centerAnimationAudio.load();
     centerAnimationAudio.play();
     centerImg[i].classList.add('animate');
-
-    if (random && random + 5 > i && random - 5 < i) {
-      clearInterval(interval2Id);
-      endAudio.play();
-      let animateId = setInterval(() => {
-        if (centerImg[i - 1].className.includes('animate')) {
-          centerImg[i - 1].classList.remove('animate');
-        } else {
-          centerImg[i - 1].classList.add('animate');
-        }
-      }, 150);
-      calculateWinOrLose(i - 1);
-      setTimeout(() => {
-        clearInterval(animateId);
-        clearALlValue();
-        centerImg[i - 1].classList.remove('animate');
-        winLoseContainer.style.display = 'none';
-        winLoseContainer.classList.remove('fadeIn');
-        canStart = true;
-      }, 1000 * 7);
-    }
     if (i !== 0) {
       centerImg[i - 1].classList.remove('animate');
     } else {
       centerImg[31].classList.remove('animate');
     }
-    i++;
-    if (i == 32) {
-      i = 0;
+    if (random && random + 5 > i && random - 5 < i) {
+      clearInterval(interval2Id);
+      endAudio.play();
+      let animateId = setInterval(() => {
+        if (centerImg[i].className.includes('animate')) {
+          centerImg[i].classList.remove('animate');
+        } else {
+          centerImg[i].classList.add('animate');
+        }
+      }, 150);
+      calculateWinOrLose(i);
+      setTimeout(() => {
+        clearInterval(animateId);
+        clearALlValue();
+        centerImg[i].classList.remove('animate');
+        winLoseContainer.style.display = 'none';
+        winLoseContainer.classList.remove('fadeIn');
+        canStart = true;
+      }, 1000 * 7);
+    } else {
+      if (i < 31) {
+        i++;
+      } else {
+        i = 0;
+      }
     }
   }, x);
 }
@@ -272,6 +280,11 @@ function centerAnimation(x, random) {
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
+  if (land.includes(indexMap[i])) {
+    won += bet.betList[10].myValue * 2;
+  } else if (aqua.includes(indexMap[i])) {
+    won += bet.betList[11].myValue * 2;
+  }
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   win.textContent = 0;
   if (won == 0) {
@@ -288,7 +301,7 @@ function calculateWinOrLose(i) {
   } else {
     winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
       won
-    )}`;
+    )} coin.`;
   }
   winLoseContainer.style.display = 'flex';
   winLoseContainer.classList.add('fadeIn');
@@ -346,41 +359,73 @@ menuPlayBtn.addEventListener('click', () => {
 const volumeBtn = document.getElementById('volumeBtn');
 const achievementBtn = document.getElementById('achievementBtn');
 const settingBtn = document.getElementById('settingBtn');
-volumeBtn.onclick = () => {
+volumeBtn.onclick = (e) => {
   clickAudio.play();
-  volumeBtn.classList.add('buttonAnimate');
-  setTimeout(() => {
-    volumeBtn.classList.remove('buttonAnimate');
-  }, 310);
-};
-achievementBtn.onclick = () => {
-  clickAudio.play();
-  achievementBtn.classList.add('buttonAnimate');
-  setTimeout(() => {
-    achievementBtn.classList.remove('buttonAnimate');
-  }, 310);
-};
-settingBtn.onclick = () => {
-  clickAudio.play();
-  settingBtn.classList.add('buttonAnimate');
-  setTimeout(() => {
-    settingBtn.classList.remove('buttonAnimate');
-  }, 310);
-};
-
-menuQuitBtn.onclick = () => {
-  clickAudio.play();
-  menuQuitBtn.classList.add('buttonAnimate');
-  setTimeout(() => {
-    menuQuitBtn.classList.remove('buttonAnimate');
-  }, 310);
-};
-
-backToMenuBtn.addEventListener('click', (e) => {
   const { target } = e;
   target.classList.add('buttonAnimate');
   setTimeout(() => {
     target.classList.remove('buttonAnimate');
+  }, 310);
+  if (startAudio.volume != 0) {
+    startAudio.volume = 0;
+  } else {
+    startAudio.volume = 1;
+  }
+};
+achievementBtn.onclick = (e) => {
+  clickAudio.play();
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+  }, 310);
+};
+settingBtn.onclick = (e) => {
+  clickAudio.play();
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+menuQuitBtn.onclick = (e) => {
+  clickAudio.play();
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+profile.onclick = (e) => {
+  clickAudio.play();
+  profile.classList.add('buttonAnimate');
+  setTimeout(() => {
+    profile.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+coinCon.onclick = (e) => {
+  clickAudio.play();
+  coinCon.classList.add('buttonAnimate');
+  setTimeout(() => {
+    coinCon.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+getCoin.onclick = (e) => {
+  clickAudio.play();
+  getCoin.classList.add('buttonAnimate');
+  setTimeout(() => {
+    getCoin.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+backToMenuBtn.addEventListener('click', (e) => {
+  backToMenuBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    backToMenuBtn.classList.remove('buttonAnimate');
     if (!canStart) return;
     gameContainer.style.display = 'none';
     backToMenuBtn.style.display = 'none';

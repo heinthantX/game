@@ -33,7 +33,7 @@ body {
 
 .game {
   width: 90%;
-  height: 80%;
+  height: 85%;
   background-color: #ff7b01;
   border-radius: 50px;
   border-top: 9px solid #ff7b01;
@@ -123,8 +123,13 @@ body {
   padding: 4% 0 0 8%;
 }
 
+.leftSideBoxContainer .box,
+.rightSideBoxContainer .box {
+  margin-bottom: 6px;
+}
+
 .box:last-child {
-  margin-bottom: 16%;
+  margin-bottom: 20%;
 }
 
 .btnGroup {
@@ -132,11 +137,11 @@ body {
   /* justify-content: space-between; */
   justify-content: center;
   align-items: center;
-  height: 65%;
+  height: 68%;
 }
 .animalCircleImg {
-  width: 65%;
-  height: 100%;
+  width: 80%;
+  height: 110%;
   cursor: pointer;
 }
 .reduceBtn {
@@ -176,6 +181,8 @@ body {
   color: orange;
   font-size: 1.5rem;
   font-weight: 800;
+  padding-right: 2.6px;
+  box-sizing: border-box;
 }
 .myValue {
   border-start-start-radius: 5px;
@@ -248,7 +255,7 @@ body {
 
 .game__container-center-top .img6 {
   position: absolute;
-  width: 10.5%;
+  width: 11%;
   height: 10.5%;
   left: 58%;
   top: 0;
@@ -281,9 +288,9 @@ body {
 .game__container-center-top .img10 {
   position: absolute;
   width: 10.5%;
-  width: 10.5%;
+  height: 10.5%;
   right: 0;
-  top: 10.6%;
+  top: 10.2%;
 }
 
 .game__container-center-top .img11 {
@@ -384,7 +391,7 @@ body {
 
 .game__container-center-top .img23 {
   position: absolute;
-  width: 10.5%;
+  width: 11%;
   height: 10.5%;
   right: 68.7%;
   bottom: 0%;
@@ -466,18 +473,19 @@ body {
   width: 100%;
   height: 12%;
   background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-  margin-top: 1.4rem;
+  margin-top: 1.85rem;
   border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 1rem;
   font-weight: 700;
+  padding: 0 0.5rem 0 0.5rem;
+  box-sizing: border-box;
 }
 
 .game__container-center-bottom-item1 {
   width: 39%;
-  margin-left: 0.5rem;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -492,10 +500,10 @@ body {
   padding: 6px 3px;
   background-color: #fff;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .game__container-center-bottom-item2 {
-  width: 29%;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -517,6 +525,7 @@ body {
 .game__container-center-bottom-item2-price span {
   color: #ff7b01;
   padding: 6px 3px;
+  box-sizing: border-box;
 }
 
 .game__container-right {
@@ -536,10 +545,12 @@ body {
   align-items: center;
   justify-content: center;
   gap: 6px;
+  margin-bottom: 4px;
 }
+
 .game__container-right .box .animalCircleImg {
   width: auto;
-  height: 103%;
+  height: 108%;
   margin-left: 0.5rem;
 }
 
@@ -553,11 +564,7 @@ body {
     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
     rgba(0, 0, 0, 0.09) 0px 32px 16px;
   align-items: center;
-  gap: 5px;
-}
-
-.box-amount-item:nth-child(1) {
-  margin-left: 9px;
+  justify-content: space-evenly;
 }
 
 .box-amount-item:nth-child(2) {
@@ -565,7 +572,7 @@ body {
 }
 
 .box-amount-item {
-  width: 40%;
+  width: 43%;
   height: 70%;
   background-color: #fff;
   border-radius: 8px;
@@ -603,10 +610,11 @@ body {
     box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 } */
 .game__container-right .btn-box {
-  padding: 0px;
-  width: 50%;
+  /* width: 50%; */
   height: 14%;
-  margin-left: 53%;
+  display: flex;
+  justify-content: center;
+  padding-left: 40px;
 }
 .game__container-right .btn-box .rotate {
   height: 100%;
@@ -617,6 +625,7 @@ body {
   padding: 0px;
   width: 100%;
   height: 13%;
+  padding-left: 40px;
 }
 
 .game__container-right .btn img {
@@ -776,10 +785,13 @@ body {
 
 .img {
   position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .img img {
   width: 100%;
+  height: 100%;
 }
 
 .animate::after {
@@ -881,7 +893,7 @@ body {
 
 .start-loading {
   width: 100%;
-  height: 30px;
+  height: 1rem;
   padding: 1px;
   border-radius: 20px;
   border: #ffe600 solid 3px;
@@ -949,10 +961,10 @@ body {
 
 .backToMenuBtn {
   position: absolute;
-  top: 2%;
+  top: 1.3%;
   left: 10%;
   width: 25%;
-  height: 5%;
+  height: 4%;
   display: flex;
   font-weight: 900;
   align-items: center;
@@ -992,13 +1004,5 @@ body {
 
   .right__circle {
     right: 1.3rem;
-  }
-
-  .box-amount {
-    gap: 11px;
-  }
-
-  .game__container-right .get-coin {
-    height: 60px;
   }
 }
