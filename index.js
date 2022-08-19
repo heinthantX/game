@@ -18,6 +18,7 @@ const menuQuitBtn = document.getElementById('menuQuitBtn');
 const menuBoardContainer = document.querySelector('.menu-board__container');
 const gameContainer = document.querySelector('.game__container');
 const backToMenuBtn = document.querySelector('.backToMenuBtn');
+const winLoseContainer = document.querySelector('.win-lose-container');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -175,8 +176,9 @@ startBtn.addEventListener('click', () => {
     clockAudio.play();
   });
   intervalId = setInterval(() => {
-    countDown.style.display = 'block';
     secondSpan.textContent = count;
+    countDown.style.display = 'block';
+    countDown.classList.add('fadeIn');
     let radius = circleEle.r.baseVal.value;
     let circumference = radius * 2 * Math.PI;
     let barLength = (count * circumference) / 30;
@@ -190,6 +192,7 @@ startBtn.addEventListener('click', () => {
       clearInterval(intervalId);
       intervalId = null;
       countDown.style.display = 'none';
+      countDown.classList.remove('fadeIn');
 
       centerAnimation(110, null);
       setTimeout(() => {
@@ -219,6 +222,7 @@ clearBtn.addEventListener('click', () => {
 
 function stop() {
   countDown.style.display = 'none';
+  countDown.classList.remove('fadeIn');
   clockAudio.pause();
   clearInterval(intervalId);
   canBet = false;
@@ -246,7 +250,10 @@ function centerAnimation(x, random) {
       setTimeout(() => {
         clearInterval(animateId);
         centerImg[i - 1].classList.remove('animate');
-      }, 1000 * 7);
+        winLoseContainer.style.display = 'none';
+        winLoseContainer.classList.remove('fadeIn');
+        canStart = true;
+      }, 1000 * 3);
     }
     if (i !== 0) {
       centerImg[i - 1].classList.remove('animate');
@@ -262,25 +269,28 @@ function centerAnimation(x, random) {
 
 // let clonedBetList;
 function calculateWinOrLose(i) {
-  canStart = true;
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   win.textContent = 0;
   if (won == 0) {
     if (totalBet) {
-      alert('deal');
+      winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
     } else {
       return;
     }
   }
   if (won > 0) {
-    alert(`Yay.., you win ${won}!`);
+    winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
     win.textContent = won;
     coin.textContent = parseInt(coin.textContent) + won;
   } else {
-    alert(`You lose ${Math.abs(won)}`);
+    winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
+      won
+    )}`;
   }
+  winLoseContainer.style.display = 'flex';
+  winLoseContainer.classList.add('fadeIn');
   clearALlValue();
 }
 

@@ -91,7 +91,8 @@ body {
 
 .menu-board__container {
   background-image: url('../images/menu-board/processed-057daf40-fd87-4482-8246-f6a08de38dd7_9pNX3tMT.jpeg');
-  background-size: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -728,10 +729,15 @@ body {
 
 #count-down {
   color: #ffe600;
-  font-size: 80px;
+  font-size: 3.2rem;
   font-weight: 900;
   position: relative;
+  transform: scale(0);
   display: none;
+}
+
+.fadeIn {
+  animation: fadeIn 500ms ease-in-out forwards;
 }
 
 #count-down span {
@@ -739,6 +745,33 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.win-lose-container {
+  width: 55%;
+  height: 40%;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1)
+  );
+  transform: scale(0);
+  display: none;
+}
+
+.win-lose-container p {
+  background: linear-gradient(45deg, #ffe600, #ff7b01);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 }
 
 .img {
@@ -932,6 +965,15 @@ body {
 .backToMenuBtn img {
   height: 100%;
   /* margin-right: 10%; */
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 @media (min-width: 1400px) {
