@@ -265,7 +265,7 @@ function centerAnimation(x, random) {
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
         canStart = true;
-      }, 1000 * 7);
+      }, 1000 * 60);
     } else {
       if (i < 31) {
         i++;
