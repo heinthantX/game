@@ -17,6 +17,7 @@ const menuPlayBtn = document.getElementById('menuPlayBtn');
 const menuQuitBtn = document.getElementById('menuQuitBtn');
 const menuBoardContainer = document.querySelector('.menu-board__container');
 const gameContainer = document.querySelector('.game__container');
+const backToMenuBtn = document.querySelector('.backToMenuBtn');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -136,7 +137,7 @@ for (let i = 0; i < 12; i++) {
     const { myValue } = bet.betList[i];
     bet.betList[i].myValue = myValue < 50 ? myValue + 1 : myValue;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    coin.textContent--;
+    coin.textContent -= myValue < 50 ? 1 : 0;
   });
 
   // reduceBtn[i].addEventListener('click', () => {
@@ -321,10 +322,10 @@ menuPlayBtn.addEventListener('click', () => {
   loadingBar.classList.add('loadingAnimation');
   setTimeout(() => {
     menuBoardContainer.style.display = 'none';
+    backToMenuBtn.style.display = 'flex';
     gameContainer.style.display = 'flex';
     startLoading.style.visibility = 'hidden';
     loadingBar.classList.remove('loadingAnimation');
-    startAudio.load();
     startAudio.play();
     startAudio.addEventListener('ended', () => {
       startAudio.play();
@@ -364,3 +365,15 @@ menuQuitBtn.onclick = () => {
     menuQuitBtn.classList.remove('buttonAnimate');
   }, 310);
 };
+
+backToMenuBtn.addEventListener('click', (e) => {
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+    if (!canStart) return;
+    gameContainer.style.display = 'none';
+    backToMenuBtn.style.display = 'none';
+    menuBoardContainer.style.display = 'flex';
+  }, 310);
+});
