@@ -249,11 +249,12 @@ function centerAnimation(x, random) {
       calculateWinOrLose(i - 1);
       setTimeout(() => {
         clearInterval(animateId);
+        clearALlValue();
         centerImg[i - 1].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
         canStart = true;
-      }, 1000 * 3);
+      }, 1000 * 7);
     }
     if (i !== 0) {
       centerImg[i - 1].classList.remove('animate');
@@ -291,7 +292,6 @@ function calculateWinOrLose(i) {
   }
   winLoseContainer.style.display = 'flex';
   winLoseContainer.classList.add('fadeIn');
-  clearALlValue();
 }
 
 function clearALlValue() {
