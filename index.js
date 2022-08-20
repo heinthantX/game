@@ -28,7 +28,7 @@ const clickAudio = new Audio(
 );
 const startAudio = new Audio('./assets/audio/children.wav');
 const endAudio = new Audio('./assets/audio/Spell of Magic Potion 6.wav');
-const clockAudio = new Audio('./assets/audio/ClockTick8CUSlow SDT2049003.wav');
+const clockAudio = new Audio('./assets/audio/Timer 01.wav');
 const centerAnimationAudio = new Audio(
   './assets/audio/Bubble 01 (mp3cut.net).wav'
 );
@@ -175,14 +175,10 @@ startBtn.addEventListener('click', () => {
   canStart = false;
   let random = Math.floor(Math.random() * centerImg.length - 1);
   canBet = true;
-  let count = 3;
+  let count = 30;
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
-  clockAudio.load();
-  clockAudio.play();
-  clockAudio.addEventListener('ended', () => {
-    clockAudio.play();
-  });
+
   intervalId = setInterval(() => {
     secondSpan.textContent = count;
     countDown.style.display = 'block';
@@ -191,6 +187,13 @@ startBtn.addEventListener('click', () => {
     let circumference = radius * 2 * Math.PI;
     let barLength = (count * circumference) / 30;
     circleEle.setAttribute('stroke-dasharray', barLength + ' ' + circumference);
+    if (count == 30) {
+      clockAudio.load();
+      clockAudio.play();
+      clockAudio.addEventListener('ended', () => {
+        clockAudio.play();
+      });
+    }
     if (count == 0) {
       secondSpan.textContent = 'GO';
       clockAudio.pause();
@@ -240,6 +243,7 @@ function stop() {
 
 function centerAnimation(x, random) {
   interval2Id = setInterval(() => {
+    centerAnimationAudio.load();
     centerAnimationAudio.play();
     centerImg[i].classList.add('animate');
     if (i !== 0) {
@@ -281,9 +285,9 @@ function calculateWinOrLose(i) {
   let totalBet = bet.total();
   let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
   if (land.includes(indexMap[i])) {
-    won += bet.betList[10].myValue * 2;
+    won += bet.betList[10].myValue * 3;
   } else if (aqua.includes(indexMap[i])) {
-    won += bet.betList[11].myValue * 2;
+    won += bet.betList[11].myValue * 3;
   }
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   win.textContent = 0;
@@ -361,14 +365,15 @@ const achievementBtn = document.getElementById('achievementBtn');
 const settingBtn = document.getElementById('settingBtn');
 volumeBtn.onclick = (e) => {
   clickAudio.play();
-  const { target } = e;
-  target.classList.add('buttonAnimate');
+  volumeBtn.classList.add('buttonAnimate');
   setTimeout(() => {
-    target.classList.remove('buttonAnimate');
+    volumeBtn.classList.remove('buttonAnimate');
   }, 310);
   if (startAudio.volume != 0) {
+    volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
     startAudio.volume = 0;
   } else {
+    volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
     startAudio.volume = 1;
   }
 };
