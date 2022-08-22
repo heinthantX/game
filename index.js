@@ -286,7 +286,6 @@ function centerAnimation(x, random) {
     }
     if (random && random + 7 > i && random - 7 < i) {
       clearInterval(interval2Id);
-      endAudio.play();
       let animateId = setInterval(() => {
         if (centerImg[i].className.includes('animate')) {
           centerImg[i].classList.remove('animate');
@@ -314,7 +313,7 @@ function centerAnimation(x, random) {
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
         canStart = true;
-      }, 1000 * 10);
+      }, 1000 * 60);
     } else {
       if (i < 31) {
         i++;
