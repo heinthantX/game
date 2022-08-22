@@ -1,4 +1,4 @@
-const coin = document.getElementById('coin');
+const coin = document.querySelectorAll('.coin');
 const plusBtn = document.getElementsByClassName('plus-btn');
 const myValueDiv = document.getElementsByClassName('myValue');
 const reduceBtn = document.getElementsByClassName('reduceBtn');
@@ -8,7 +8,7 @@ const startBtn = document.getElementById('start-btn');
 const clearBtn = document.getElementById('clear-btn');
 
 const centerImg = document.getElementsByClassName('img');
-const jackpot = document.getElementById('jackpot');
+const betCoins = document.getElementById('bet-coins');
 const reBet = document.getElementById('reBet');
 const win = document.getElementById('win');
 const countDown = document.getElementById('count-down');
@@ -22,6 +22,7 @@ const winLoseContainer = document.querySelector('.win-lose-container');
 const profile = document.querySelector('.profile');
 const coinCon = document.querySelector('.coin-con');
 const getCoin = document.querySelector('.get-coin');
+const winText = document.getElementById('win-text');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -32,56 +33,78 @@ const clockAudio = new Audio('./assets/audio/Timer 01.wav');
 const centerAnimationAudio = new Audio(
   './assets/audio/Bubble 01 (mp3cut.net).wav'
 );
+const coinDropAudio = new Audio('./assets/audio/CoinGold AMA01_88_1.wav');
+const lossAudio = new Audio('./assets/audio/Stage Failed.wav');
+const winAudio = new Audio('./assets/audio/Happy Win Game.wav');
+
+function partyAnimation() {
+  party.confetti(document.body, {
+    count: party.variation.range(200, 400),
+    size: party.variation.range(0.8, 1.5),
+  });
+}
 
 let bet = {
   betList: [
     {
       name: 'dog',
       myValue: 0,
-    },
-    {
-      name: 'elephant',
-      myValue: 0,
-    },
-    {
-      name: 'sheep',
-      myValue: 0,
+      multiple: 4,
     },
     {
       name: 'monkey',
       myValue: 0,
+      multiple: 6,
     },
     {
-      name: 'jellyfish',
+      name: 'sheep',
       myValue: 0,
+      multiple: 12,
     },
     {
-      name: 'shark',
+      name: 'elephant',
       myValue: 0,
+      multiple: 24,
     },
     {
       name: 'seahorse',
       myValue: 0,
+      multiple: 4,
+    },
+    {
+      name: 'jellyfish',
+      myValue: 0,
+      multiple: 6,
     },
     {
       name: 'dolphin',
       myValue: 0,
+      multiple: 12,
+    },
+    {
+      name: 'shark',
+      myValue: 0,
+      multiple: 24,
     },
     {
       name: 'tortoise',
       myValue: 0,
+      multiple: 24,
     },
     {
       name: 'whale',
       myValue: 0,
+      multiple: 48,
     },
     {
       name: 'land',
       myValue: 0,
+      multiple: 2,
     },
     {
       name: 'sea',
       myValue: 0,
+      multiple: 2,
     },
   ],
   total: function () {
@@ -92,6 +115,11 @@ let bet = {
     return total;
   },
 };
+let userCoin = 600;
+const updateCoinTextContent = () => {
+  coin.forEach((coin) => (coin.textContent = userCoin.toLocaleString()));
+};
+updateCoinTextContent();
 
 const indexMap = {
   0: 8,
@@ -117,22 +145,22 @@ const indexMap = {
   17: 7,
   18: 7,
   19: 7,
-  21: 1,
-  22: 1,
-  23: 1,
+  21: 3,
+  22: 3,
+  23: 3,
   25: 2,
   26: 2,
   27: 2,
-  29: 3,
-  30: 3,
-  31: 3,
+  29: 1,
+  30: 1,
+  31: 1,
 };
 Object.freeze(indexMap);
 
 // const land = [1, 2, 3, 21, 22, 23, 25, 26, 27, 29, 30, 31];
 // const aqua = [4, 12, 20, 28, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19];
 const land = [0, 1, 2, 3];
-const aqua = [4, 5, 6, 7, 9];
+const aqua = [4, 5, 6, 7];
 
 let canBet = false;
 for (let i = 0; i < 12; i++) {
@@ -143,10 +171,12 @@ for (let i = 0; i < 12; i++) {
       plusBtn[i].classList.remove('buttonAnimate');
     }, 310);
     if (!canBet) return;
-    const { myValue } = bet.betList[i];
-    bet.betList[i].myValue = myValue < 50 ? myValue + 1 : myValue;
+    bet.betList[i].myValue += 1;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-    coin.textContent -= myValue < 50 ? 1 : 0;
+    userCoin -= userCoin ? 1 : 0;
+    console.log(userCoin);
+    updateCoinTextContent();
+    betCoins.textContent = bet.total();
   });
 
   // reduceBtn[i].addEventListener('click', () => {
@@ -228,7 +258,8 @@ clearBtn.addEventListener('click', () => {
     clearBtn.classList.remove('buttonAnimate');
   }, 310);
   if (!canBet) return;
-  coin.textContent = parseInt(coin.textContent) + bet.total();
+  userCoin += bet.total();
+  updateCoinTextContent();
   clearALlValue();
   stop();
 });
@@ -253,7 +284,7 @@ function centerAnimation(x, random) {
     } else {
       centerImg[31].classList.remove('animate');
     }
-    if (random && random + 5 > i && random - 5 < i) {
+    if (random && random + 7 > i && random - 7 < i) {
       clearInterval(interval2Id);
       endAudio.play();
       let animateId = setInterval(() => {
@@ -264,15 +295,26 @@ function centerAnimation(x, random) {
         }
       }, 150);
       calculateWinOrLose(i);
+      if (!isWon) {
+        lossAudio.play();
+      } else {
+        winAudio.play();
+      }
       setTimeout(() => {
         clearInterval(animateId);
         clearALlValue();
-        startAudio.volume = 1;
+        updateCoinTextContent();
+        if (isWon) {
+          coinDropAudio.play();
+        }
+        setTimeout(() => {
+          startAudio.volume = 1;
+        }, 1000 * 2);
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
         canStart = true;
-      }, 1000 * 60);
+      }, 1000 * 10);
     } else {
       if (i < 31) {
         i++;
@@ -284,17 +326,24 @@ function centerAnimation(x, random) {
 }
 
 // let clonedBetList;
+let isWon = false;
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
-  let won = bet.betList[indexMap[i]].myValue * 5 - totalBet;
+  let won =
+    bet.betList[indexMap[i]].myValue * (bet.betList[indexMap[i]].multiple + 1) -
+    totalBet;
   if (land.includes(indexMap[i])) {
-    won += bet.betList[10].myValue * 3;
+    won += bet.betList[10].myValue * (bet.betList[11].multiple + 1);
   } else if (aqua.includes(indexMap[i])) {
-    won += bet.betList[11].myValue * 3;
+    won += bet.betList[11].myValue * (bet.betList[11].multiple + 1);
   }
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   win.textContent = 0;
   if (won == 0) {
+    isWon = false;
+    winText.textContent = 'Win';
+    winText.style.color = '#fff';
+    win.textContent = won;
     if (totalBet) {
       winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
     } else {
@@ -302,13 +351,21 @@ function calculateWinOrLose(i) {
     }
   }
   if (won > 0) {
+    isWon = true;
+    partyAnimation();
     winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
+    winText.textContent = 'Win';
+    winText.style.color = '#3fff00';
     win.textContent = won;
-    coin.textContent = parseInt(coin.textContent) + won;
+    userCoin += won;
   } else {
+    isWon = false;
     winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
       won
     )} coin.`;
+    winText.textContent = 'Lose';
+    winText.style.color = '#FF2400';
+    win.textContent = Math.abs(won);
   }
   winLoseContainer.style.display = 'flex';
   winLoseContainer.classList.add('fadeIn');
@@ -319,6 +376,7 @@ function clearALlValue() {
     bet.betList[i].myValue = 0;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
   }
+  betCoins.textContent = 0;
 }
 
 reBet.addEventListener('click', () => {
@@ -336,7 +394,8 @@ reBet.addEventListener('click', () => {
   // coin.textContent -= bet.total();
   // jackpot.textContent -= bet.total();
   if (!canBet) return;
-  coin.textContent = parseInt(coin.textContent) + bet.total();
+  userCoin += bet.total();
+  updateCoinTextContent();
   clearALlValue();
 });
 
@@ -360,7 +419,7 @@ menuPlayBtn.addEventListener('click', () => {
     startAudio.addEventListener('ended', () => {
       startAudio.play();
     });
-  }, 1000 * 12);
+  }, 1000 * 3.3);
 });
 
 const volumeBtn = document.getElementById('volumeBtn');

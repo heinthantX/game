@@ -484,45 +484,24 @@ body {
   box-sizing: border-box;
 }
 
-.game__container-center-bottom-item1 {
-  width: 39%;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.game__container-center-bottom-item1 p {
-  color: #fff;
-}
-
-.game__container-center-bottom-item1 span {
-  color: #ff7b01;
-  padding: 6px 3px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-sizing: border-box;
-}
-
+.game__container-center-bottom-item1,
 .game__container-center-bottom-item2 {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
-.game__container-center-bottom-item2 p {
+.game__container-center-bottom p {
   color: #fff;
 }
 
-.game__container-center-bottom-item2-price {
+.game__container-center-bottom span {
   width: 60px;
   background-color: #fff;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-}
-
-.game__container-center-bottom-item2-price span {
   color: #ff7b01;
   padding: 6px 3px;
   box-sizing: border-box;
@@ -889,8 +868,8 @@ body {
   border-radius: 75px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 50px 0 15px;
+  justify-content: space-evenly;
+  /* padding: 0 50px 0 15px; */
   color: white;
   font-size: 40px;
   font-weight: 900;
@@ -899,8 +878,8 @@ body {
 
 .coin-con img {
   height: 70%;
-  margin-right: 10px;
 }
+
 #menuPlayBtn,
 #menuQuitBtn {
   width: 30%;
@@ -928,7 +907,7 @@ body {
 }
 
 .loadingAnimation {
-  animation: loading 10s forwards;
+  animation: loading 3s forwards;
 }
 
 @keyframes loading {
