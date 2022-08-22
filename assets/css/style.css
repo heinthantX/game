@@ -203,7 +203,7 @@ body {
 
 .game__container-center-top {
   width: 100%;
-  height: 75%;
+  height: 77%;
   position: relative;
   background-image: url(../images/square-buttons/sea-bg.png);
   background-size: cover;
@@ -473,7 +473,7 @@ body {
   width: 100%;
   height: 12%;
   background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
-  margin-top: 1.85rem;
+  margin-top: 1.4rem;
   border-radius: 14px;
   display: flex;
   align-items: center;
@@ -648,6 +648,7 @@ body {
   gap: 4px;
   margin-top: 0.2rem;
   margin-left: 2rem;
+  box-sizing: border-box;
 }
 .game__container-right .get-coin img {
   width: 15%;

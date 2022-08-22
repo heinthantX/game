@@ -193,11 +193,13 @@ startBtn.addEventListener('click', () => {
       clockAudio.addEventListener('ended', () => {
         clockAudio.play();
       });
+      startAudio.volume = 0.5;
     }
     if (count == 0) {
       secondSpan.textContent = 'GO';
       clockAudio.pause();
       canBet = false;
+      startAudio.volume = 0;
     }
     if (count < 0) {
       clearInterval(intervalId);
@@ -265,6 +267,7 @@ function centerAnimation(x, random) {
       setTimeout(() => {
         clearInterval(animateId);
         clearALlValue();
+        startAudio.volume = 1;
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
