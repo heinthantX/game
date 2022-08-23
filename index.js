@@ -294,11 +294,7 @@ function centerAnimation(x, random) {
         }
       }, 150);
       calculateWinOrLose(i);
-      if (!isWon) {
-        lossAudio.play();
-      } else {
-        winAudio.play();
-      }
+
       setTimeout(() => {
         clearInterval(animateId);
         clearALlValue();
@@ -351,7 +347,6 @@ function calculateWinOrLose(i) {
   }
   if (won > 0) {
     isWon = true;
-    partyAnimation();
     winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
     winText.textContent = 'Win';
     winText.style.color = '#3fff00';
@@ -366,6 +361,14 @@ function calculateWinOrLose(i) {
     winText.style.color = '#FF2400';
     win.textContent = Math.abs(won);
   }
+  setTimeout(() => {
+    if (!isWon) {
+      lossAudio.play();
+    } else {
+      partyAnimation();
+      winAudio.play();
+    }
+  }, 300);
   winLoseContainer.style.display = 'flex';
   winLoseContainer.classList.add('fadeIn');
 }
