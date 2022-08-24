@@ -28,8 +28,12 @@ const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
 );
 const startAudio = new Audio('./assets/audio/children.wav');
+startAudio.loop = true;
+
 const endAudio = new Audio('./assets/audio/Spell of Magic Potion 6.wav');
 const clockAudio = new Audio('./assets/audio/Timer 01.wav');
+clockAudio.loop = true;
+
 const centerAnimationAudio = new Audio(
   './assets/audio/Bubble 01 (mp3cut.net).wav'
 );
@@ -162,6 +166,17 @@ Object.freeze(indexMap);
 const land = [0, 1, 2, 3];
 const aqua = [4, 5, 6, 7];
 
+// setTimeout(() => {
+//   startAudio.play();
+// }, 2000);
+let played = false;
+document.addEventListener('click', () => {
+  if (!played) {
+    startAudio.play();
+    played = true;
+  }
+});
+
 let canBet = false;
 for (let i = 0; i < 12; i++) {
   plusBtn[i].addEventListener('click', () => {
@@ -219,10 +234,12 @@ startBtn.addEventListener('click', () => {
     if (count == 30) {
       clockAudio.load();
       clockAudio.play();
-      clockAudio.addEventListener('ended', () => {
-        clockAudio.play();
-      });
-      startAudio.pause();
+      // clockAudio.addEventListener('ended', () => {
+      //   clockAudio.play();
+      // });
+      if (!isMuted) {
+        startAudio.pause();
+      }
     }
     if (count == 0) {
       secondSpan.textContent = 'GO';
@@ -243,7 +260,7 @@ startBtn.addEventListener('click', () => {
       setTimeout(() => {
         clearInterval(interval2Id);
         centerAnimation(400, random);
-      }, 1000 * 60);
+      }, 1000 * 10);
     }
     count--;
   }, 1000);
@@ -301,7 +318,9 @@ function centerAnimation(x, random) {
           coinDropAudio.play();
         }
         setTimeout(() => {
-          startAudio.play();
+          if (!isMuted) {
+            startAudio.play();
+          }
         }, 1000 * 2);
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
@@ -322,6 +341,10 @@ function centerAnimation(x, random) {
 let isWon = false;
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
+  if (!totalBet) {
+    endAudio.play();
+    return;
+  }
   let won =
     bet.betList[indexMap[i]].myValue * (bet.betList[indexMap[i]].multiple + 1) -
     totalBet;
@@ -337,11 +360,7 @@ function calculateWinOrLose(i) {
     winText.textContent = 'Win';
     winText.style.color = '#fff';
     win.textContent = won;
-    if (totalBet) {
-      winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
-    } else {
-      return;
-    }
+    winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
   }
   if (won > 0) {
     isWon = true;
@@ -402,9 +421,9 @@ function clearALlValue() {
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
   startAudio.play();
-  startAudio.addEventListener('ended', () => {
-    startAudio.play();
-  });
+  // startAudio.addEventListener('ended', () => {
+  //   startAudio.play();
+  // });
   menuPlayBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
@@ -424,6 +443,8 @@ menuPlayBtn.addEventListener('click', () => {
 const volumeBtn = document.getElementById('volumeBtn');
 const achievementBtn = document.getElementById('achievementBtn');
 const settingBtn = document.getElementById('settingBtn');
+
+let isMuted = false;
 volumeBtn.onclick = (e) => {
   clickAudio.play();
   volumeBtn.classList.add('buttonAnimate');
@@ -433,9 +454,11 @@ volumeBtn.onclick = (e) => {
   if (startAudio.volume != 0) {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
     startAudio.volume = 0;
+    isMuted = true;
   } else {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
     startAudio.volume = 1;
+    isMuted = false;
   }
 };
 achievementBtn.onclick = (e) => {
