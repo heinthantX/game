@@ -9,15 +9,15 @@ const clearBtn = document.getElementById('clear-btn');
 
 const centerImg = document.getElementsByClassName('img');
 const betCoins = document.getElementById('bet-coins');
-const reBet = document.getElementById('reBet');
+// const reBet = document.getElementById('reBet');
 const win = document.getElementById('win');
 const countDown = document.getElementById('count-down');
 
 const menuPlayBtn = document.getElementById('menuPlayBtn');
-const menuQuitBtn = document.getElementById('menuQuitBtn');
+// const menuQuitBtn = document.getElementById('menuQuitBtn');
 const menuBoardContainer = document.querySelector('.menu-board__container');
 const gameContainer = document.querySelector('.game__container');
-const backToMenuBtn = document.querySelector('.backToMenuBtn');
+const quitBtn = document.getElementById('quitBtn');
 const winLoseContainer = document.querySelector('.win-lose-container');
 const profile = document.querySelector('.profile');
 const coinCon = document.querySelector('.coin-con');
@@ -174,7 +174,6 @@ for (let i = 0; i < 12; i++) {
     bet.betList[i].myValue += 1;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
     userCoin -= userCoin ? 1 : 0;
-    console.log(userCoin);
     updateCoinTextContent();
     betCoins.textContent = bet.total();
   });
@@ -223,13 +222,12 @@ startBtn.addEventListener('click', () => {
       clockAudio.addEventListener('ended', () => {
         clockAudio.play();
       });
-      startAudio.volume = 0.5;
+      startAudio.pause();
     }
     if (count == 0) {
       secondSpan.textContent = 'GO';
       clockAudio.pause();
       canBet = false;
-      startAudio.volume = 0;
     }
     if (count < 0) {
       clearInterval(intervalId);
@@ -245,7 +243,7 @@ startBtn.addEventListener('click', () => {
       setTimeout(() => {
         clearInterval(interval2Id);
         centerAnimation(400, random);
-      }, 1000 * 10);
+      }, 1000 * 60);
     }
     count--;
   }, 1000);
@@ -303,13 +301,13 @@ function centerAnimation(x, random) {
           coinDropAudio.play();
         }
         setTimeout(() => {
-          startAudio.volume = 1;
+          startAudio.play();
         }, 1000 * 2);
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
         canStart = true;
-      }, 1000 * 60);
+      }, 1000 * 5);
     } else {
       if (i < 31) {
         i++;
@@ -381,28 +379,32 @@ function clearALlValue() {
   betCoins.textContent = 0;
 }
 
-reBet.addEventListener('click', () => {
-  clickAudio.play();
-  reBet.classList.add('buttonAnimate');
-  setTimeout(() => {
-    reBet.classList.remove('buttonAnimate');
-  }, 310);
-  // if (!canBet || !clonedBetList) return;
-  // if (bet.betList.some((v) => v.myValue != 0)) return;
-  // bet.betList = JSON.parse(JSON.stringify(clonedBetList));
-  // for (let i in bet.betList) {
-  //   myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
-  // }
-  // coin.textContent -= bet.total();
-  // jackpot.textContent -= bet.total();
-  if (!canBet) return;
-  userCoin += bet.total();
-  updateCoinTextContent();
-  clearALlValue();
-});
+// reBet.addEventListener('click', () => {
+//   clickAudio.play();
+//   reBet.classList.add('buttonAnimate');
+//   setTimeout(() => {
+//     reBet.classList.remove('buttonAnimate');
+//   }, 310);
+//   // if (!canBet || !clonedBetList) return;
+//   // if (bet.betList.some((v) => v.myValue != 0)) return;
+//   // bet.betList = JSON.parse(JSON.stringify(clonedBetList));
+//   // for (let i in bet.betList) {
+//   //   myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
+//   // }
+//   // coin.textContent -= bet.total();
+//   // jackpot.textContent -= bet.total();
+//   if (!canBet) return;
+//   userCoin += bet.total();
+//   updateCoinTextContent();
+//   clearALlValue();
+// });
 
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
+  startAudio.play();
+  startAudio.addEventListener('ended', () => {
+    startAudio.play();
+  });
   menuPlayBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
@@ -413,14 +415,9 @@ menuPlayBtn.addEventListener('click', () => {
   loadingBar.classList.add('loadingAnimation');
   setTimeout(() => {
     menuBoardContainer.style.display = 'none';
-    backToMenuBtn.style.display = 'flex';
     gameContainer.style.display = 'flex';
     startLoading.style.visibility = 'hidden';
     loadingBar.classList.remove('loadingAnimation');
-    startAudio.play();
-    startAudio.addEventListener('ended', () => {
-      startAudio.play();
-    });
   }, 1000 * 3.3);
 });
 
@@ -458,14 +455,14 @@ settingBtn.onclick = (e) => {
   }, 310);
 };
 
-menuQuitBtn.onclick = (e) => {
-  clickAudio.play();
-  const { target } = e;
-  target.classList.add('buttonAnimate');
-  setTimeout(() => {
-    target.classList.remove('buttonAnimate');
-  }, 310);
-};
+// menuQuitBtn.onclick = (e) => {
+//   clickAudio.play();
+//   const { target } = e;
+//   target.classList.add('buttonAnimate');
+//   setTimeout(() => {
+//     target.classList.remove('buttonAnimate');
+//   }, 310);
+// };
 
 profile.onclick = (e) => {
   clickAudio.play();
@@ -491,13 +488,12 @@ getCoin.onclick = (e) => {
   }, 310);
 };
 
-backToMenuBtn.addEventListener('click', (e) => {
-  backToMenuBtn.classList.add('buttonAnimate');
+quitBtn.addEventListener('click', (e) => {
+  quitBtn.classList.add('buttonAnimate');
   setTimeout(() => {
-    backToMenuBtn.classList.remove('buttonAnimate');
+    quitBtn.classList.remove('buttonAnimate');
     if (!canStart) return;
     gameContainer.style.display = 'none';
-    backToMenuBtn.style.display = 'none';
     menuBoardContainer.style.display = 'flex';
   }, 310);
 });
