@@ -421,6 +421,19 @@ function clearALlValue() {
 //   clearALlValue();
 // });
 
+function getImage(url) {
+  return new Promise((res, rej) => {
+    let img = new Image();
+    img.onload = () => {
+      res();
+    };
+    img.onerror = () => {
+      rej();
+    };
+    img.src = url;
+  });
+}
+
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
   startAudio.play();
@@ -436,13 +449,17 @@ menuPlayBtn.addEventListener('click', () => {
   startLoading.style.visibility = 'visible';
   loadingBar.classList.add('loadingAnimation');
   setTimeout(() => {
-    menuBoardContainer.style.display = 'none';
-    gameContainer.style.display = 'flex';
-    startLoading.style.visibility = 'hidden';
-    settingContainer.style.display = 'none';
-    profileContainer.style.display = 'none';
-    loadingBar.classList.remove('loadingAnimation');
-  }, 1000 * 3.3);
+    Promise.all([getImage('./assets/images/square-buttons/sea-bg.png')])
+      .then(() => {
+        menuBoardContainer.style.display = 'none';
+        gameContainer.style.display = 'flex';
+        startLoading.style.visibility = 'hidden';
+        settingContainer.style.display = 'none';
+        profileContainer.style.display = 'none';
+        loadingBar.classList.remove('loadingAnimation');
+      })
+      .catch((e) => console.log(e));
+  }, 310);
 });
 
 const volumeBtn = document.getElementById('volumeBtn');
