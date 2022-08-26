@@ -210,6 +210,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .game__container-center-top .img1 {
@@ -844,18 +845,9 @@ body {
   justify-content: center;
 }
 .nameAndLevel p {
-  color: black;
+  color: #ff9600;
   font-weight: 900;
   margin-right: 7px;
-}
-.level {
-  width: 90%;
-  height: 20%;
-  border: 4px ridge rgba(212, 212, 212, 0.8);
-  border-radius: 8px;
-  background-image: linear-gradient(to right, #ffe600, #ff7b01);
-  background-size: 50% 100%;
-  background-repeat: no-repeat;
 }
 
 .profile img {
@@ -869,7 +861,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  /* padding: 0 50px 0 15px; */
   color: white;
   font-size: 40px;
   font-weight: 900;
@@ -937,6 +928,409 @@ body {
 
 .buttonAnimate {
   animation: btnAnimate 300ms;
+}
+
+.profileContainer {
+  display: none;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 45px;
+  position: relative;
+}
+
+.profileBackBtn,
+.settingBackBtn {
+  position: absolute;
+  top: 25px;
+  left: 30px;
+  color: white;
+  font-size: 3rem;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  padding: 2px 16px;
+  border-radius: 12px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+
+  cursor: pointer;
+}
+
+.profileContainer .personalInfoCon {
+  width: 55%;
+  height: 65%;
+  margin-top: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.personalInfoCon > p {
+  font-size: 3.2rem;
+  color: #ff9600;
+  font-weight: 700;
+}
+.level {
+  width: 97%;
+  height: 25px;
+  border: 10px solid white;
+  border-radius: 50px;
+  background: rgba(212, 212, 212, 0.4);
+  background-image: linear-gradient(to right, #ffe600, #ff7b01);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  cursor: pointer;
+}
+
+.menu-board__container .level {
+  border: 4px solid white;
+  width: 90%;
+  height: 16px;
+  box-sizing: border-box;
+}
+
+.profileContainer .coin-con {
+  width: 60%;
+  height: 90px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  cursor: pointer;
+}
+.redeem {
+  width: 100%;
+  height: 90px;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
+    rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
+    rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+.redeem input {
+  height: 77%;
+  width: 70%;
+  border-radius: 10px;
+  font-size: 2.5rem;
+  font-weight: 900;
+  font-weight: bolder;
+  padding-left: 2rem;
+  padding-right: 1rem;
+  outline: none;
+  border: none;
+  color: silver;
+}
+.redeem input::placeholder {
+  color: silver;
+  font-weight: 900;
+}
+.redeem svg {
+  fill: white;
+  height: 70%;
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+.profileContainer .profilePhotoCon {
+  width: 35%;
+  height: 70%;
+  border-radius: 3rem;
+  background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.profileContainer .profilePhotoCon img {
+  width: 60%;
+}
+
+.settingContainer {
+  position: relative;
+  display: none;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 45px;
+  padding: 50px 0;
+  box-sizing: border-box;
+}
+
+.settingContainer h3 {
+  font-size: 3.9rem;
+  font-weight: 900;
+  background-image: linear-gradient(to bottom, #ffe600 40%, #ffa900);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.settingContainer > div span {
+  color: #ffa900;
+  font-size: 2.5rem;
+  font-weight: 900;
+}
+
+.settingContainer > div {
+  display: flex;
+  gap: 50px;
+}
+
+.settingContainer > div > div {
+  flex: 1;
+  text-align: right;
+}
+
+.settingContainer .volCon {
+  width: 270px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffa900;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
+.volumeControl {
+  width: 90%;
+  height: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(aqua, aqua);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+}
+
+.volumeControl::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 27px;
+  height: 27px;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.switch {
+  position: relative;
+  width: 110px;
+  height: 45px;
+  border-radius: 25px;
+}
+
+#musicBtn {
+  cursor: pointer;
+}
+
+.switch input {
+  appearance: none;
+  width: 110px;
+  height: 45px;
+  border-radius: 25px;
+  /* background: linear-gradient(to bottom, #ffe600, #ff7b01); */
+  background: #ffa900;
+  outline: none;
+}
+
+.switch input::before,
+.switch input::after {
+  z-index: 2;
+  position: absolute;
+  top: 56%;
+  transform: translateY(-58%);
+  font-weight: 900;
+  font-size: 1rem;
+}
+
+.switch input::before {
+  color: #ff7b01;
+  content: 'OFF';
+  left: 10px;
+  transition: color 0.5s;
+}
+
+.switch input::after {
+  color: #fff;
+  content: 'ON';
+  right: 15px;
+  transition: color 0.5s;
+}
+
+.switch input:checked {
+  background: linear-gradient(to bottom, #ffe600, #ff7b01);
+}
+
+.switch label {
+  z-index: 1;
+  position: absolute;
+  top: 5px;
+  bottom: 4px;
+  border-radius: 20px;
+}
+
+.switch input {
+  transition: 0.25s;
+}
+
+.switch input:checked + label {
+  left: 5px;
+  right: 55px;
+  background: #fff;
+  transition: left 0.5s, right 0.4s 0.2s;
+}
+
+.switch input:not(:checked) {
+  background: #ffa900;
+  transition: background 0.4s;
+}
+
+.switch input:not(:checked)::before {
+  color: #fff;
+  transition: color 0.5s;
+}
+
+.switch input:not(:checked)::after {
+  color: #ff7b01;
+  transition: color 0.5s 0.2s;
+}
+
+.switch input:not(:checked) + label {
+  left: 55px;
+  right: 5px;
+  background: #fff;
+  transition: left 0.4s 0.2s, right 0.5s, background 0.35s;
+}
+
+.privacy,
+.userAgreement {
+  background: #ffa900;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  text-align: unset !important;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.aboutBettingSlots {
+  background: #ffa900;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 30px;
+}
+
+.quitConfirm {
+  width: 55%;
+  height: 40%;
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 1.7rem;
+  font-weight: 700;
+  border-radius: 20px;
+  color: #fff;
+  background: linear-gradient(
+    65deg,
+    rgba(4, 125, 180, 0.85),
+    rgba(4, 125, 180, 0.8)
+  );
+  transform: scale(1);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  display: none;
+}
+
+.quitConfirm > div {
+  display: flex;
+  width: 100%;
+
+  justify-content: space-evenly;
+}
+
+.button:focus:not(:focus-visible),
+.button:focus {
+  outline: 0;
+}
+
+.button:active {
+  background-color: #3e3bba;
+  background-image: none;
+  border-color: #3a38ae;
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
+}
+
+.noBtn:active {
+  background: rgb(190, 9, 9);
+  border-color: rgba(255, 9, 9, 0.5);
+}
+
+.button:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset,
+    rgba(104, 101, 235, 0.5) 0 0 0 0.2rem;
+}
+.noBtn:active:focus {
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset,
+    rgba(255, 9, 9, 0.3) 0 0 0 0.2rem;
+}
+
+.noBtn,
+.yesBtn {
+  appearance: button;
+  background-color: #4d4ae8;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
+  border: 1px solid #4d4ae8;
+  border-radius: 1rem;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,
+    rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.noBtn {
+  background: rgb(226, 12, 12);
+  border: 1px solid rgb(226, 12, 12);
 }
 
 @keyframes btnAnimate {

@@ -68,6 +68,71 @@
             <div class="loading"></div>
           </div>
         </div>
+
+        <div class="settingContainer">
+          <h3>Setting</h3>
+          <div>
+            <div>
+              <span>Music</span>
+            </div>
+            <div class="switch">
+              <input type="checkbox" class="musicBtn" />
+              <label for="switcher"></label>
+            </div>
+          </div>
+          <div>
+            <div>
+              <span>Volume</span>
+            </div>
+            <div class="volCon">
+              <input
+                class="volumeControl"
+                type="range"
+                min="0"
+                max="100"
+                step="1"
+                value="100"
+              />
+            </div>
+          </div>
+          <div>
+            <div class="privacy">
+              <p>Privacy & Policy</p>
+            </div>
+            <div class="userAgreement">
+              <div>User Agreement</div>
+            </div>
+          </div>
+          <div class="aboutBettingSlots">
+            <p>About Betting Slots</p>
+          </div>
+          <i class="settingBackBtn fa-solid fa-caret-left"></i>
+        </div>
+
+        <div class="profileContainer">
+          <i class="profileBackBtn fa-solid fa-caret-left"></i>
+          <div class="personalInfoCon">
+            <p class="name">Andrew</p>
+            <div class="level"></div>
+            <div class="coin-con">
+              <img src="./assets/images/btn/coin1.png" alt="" />
+              <p class="coin">0</p>
+            </div>
+            <div class="redeem">
+              <input type="text" placeholder="Redeem Code " />
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M21 8H11V5a1 1 0 0 0-1.707-.707l-7 7a1 1 0 0 0 0 1.414l7 7A1 1 0 0 0 11 19v-3h10a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1z"
+                  data-name="left"
+                />
+              </svg>
+            </div>
+          </div>
+          <div class="profilePhotoCon">
+            <img src="./assets/images/menu-board/person icon.png" alt="" />
+          </div>
+        </div>
+
         <div class="game__container">
           <div class="game__container-left">
             <div class="leftSideBoxContainer">
@@ -486,6 +551,13 @@
               </div>
               <div class="win-lose-container">
                 <p>Yo! YOU WIN 7 COINS.</p>
+              </div>
+              <div class="quitConfirm">
+                <p>Do you want to quit?</p>
+                <div>
+                  <button class="noBtn button" role="button">NO</button>
+                  <button class="yesBtn button" role="button">YES</button>
+                </div>
               </div>
             </div>
             <div class="game__container-center-bottom">

@@ -20,7 +20,7 @@ const gameContainer = document.querySelector('.game__container');
 const quitBtn = document.getElementById('quitBtn');
 const winLoseContainer = document.querySelector('.win-lose-container');
 const profile = document.querySelector('.profile');
-const coinCon = document.querySelector('.coin-con');
+const coinCon = document.querySelectorAll('.coin-con');
 const getCoin = document.querySelector('.get-coin');
 const winText = document.getElementById('win-text');
 
@@ -259,7 +259,7 @@ startBtn.addEventListener('click', () => {
       }, 1000 * 7);
       setTimeout(() => {
         clearInterval(interval2Id);
-        centerAnimation(400, random);
+        centerAnimation(400, 10);
       }, 1000 * 10);
     }
     count--;
@@ -299,7 +299,7 @@ function centerAnimation(x, random) {
     } else {
       centerImg[31].classList.remove('animate');
     }
-    if (random && random + 7 > i && random - 7 < i) {
+    if (typeof random == 'number' && random + 5 > i && random - 5 < i) {
       clearInterval(interval2Id);
       let animateId = setInterval(() => {
         if (centerImg[i].className.includes('animate')) {
@@ -317,15 +317,14 @@ function centerAnimation(x, random) {
         if (isWon) {
           coinDropAudio.play();
         }
-        setTimeout(() => {
-          if (!isMuted) {
-            startAudio.play();
-          }
-        }, 1000 * 2);
+        if (!isMuted) {
+          startAudio.play();
+        }
+        canStart = true;
+
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
-        canStart = true;
       }, 1000 * 5);
     } else {
       if (i < 31) {
@@ -348,21 +347,25 @@ function calculateWinOrLose(i) {
   let won =
     bet.betList[indexMap[i]].myValue * (bet.betList[indexMap[i]].multiple + 1) -
     totalBet;
+  let whichWin;
   if (land.includes(indexMap[i])) {
-    won += bet.betList[10].myValue * (bet.betList[11].multiple + 1);
+    won += bet.betList[10].myValue * bet.betList[10].multiple;
+    whichWin = 10;
   } else if (aqua.includes(indexMap[i])) {
-    won += bet.betList[11].myValue * (bet.betList[11].multiple + 1);
+    won += bet.betList[11].myValue * bet.betList[11].multiple;
+    whichWin = 11;
+  }
+  if (!bet.betList[10].myValue || !bet.betList[11].myValue) {
+    won += bet.betList[whichWin].myValue;
   }
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
-  win.textContent = 0;
   if (won == 0) {
     isWon = false;
     winText.textContent = 'Win';
     winText.style.color = '#fff';
-    win.textContent = won;
+    win.textContent = 0;
     winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
-  }
-  if (won > 0) {
+  } else if (won > 0) {
     isWon = true;
     winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
     winText.textContent = 'Win';
@@ -436,6 +439,8 @@ menuPlayBtn.addEventListener('click', () => {
     menuBoardContainer.style.display = 'none';
     gameContainer.style.display = 'flex';
     startLoading.style.visibility = 'hidden';
+    settingContainer.style.display = 'none';
+    profileContainer.style.display = 'none';
     loadingBar.classList.remove('loadingAnimation');
   }, 1000 * 3.3);
 });
@@ -445,6 +450,7 @@ const achievementBtn = document.getElementById('achievementBtn');
 const settingBtn = document.getElementById('settingBtn');
 
 let isMuted = false;
+let musicVolume;
 volumeBtn.onclick = (e) => {
   clickAudio.play();
   volumeBtn.classList.add('buttonAnimate');
@@ -453,11 +459,12 @@ volumeBtn.onclick = (e) => {
   }, 310);
   if (startAudio.volume != 0) {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
+    musicVolume = startAudio.volume;
     startAudio.volume = 0;
     isMuted = true;
   } else {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
-    startAudio.volume = 1;
+    startAudio.volume = musicVolume;
     isMuted = false;
   }
 };
@@ -469,39 +476,38 @@ achievementBtn.onclick = (e) => {
     target.classList.remove('buttonAnimate');
   }, 310);
 };
-settingBtn.onclick = (e) => {
-  clickAudio.play();
-  const { target } = e;
-  target.classList.add('buttonAnimate');
-  setTimeout(() => {
-    target.classList.remove('buttonAnimate');
-  }, 310);
-};
 
-// menuQuitBtn.onclick = (e) => {
-//   clickAudio.play();
-//   const { target } = e;
-//   target.classList.add('buttonAnimate');
-//   setTimeout(() => {
-//     target.classList.remove('buttonAnimate');
-//   }, 310);
-// };
-
+const profileContainer = document.querySelector('.profileContainer');
 profile.onclick = (e) => {
   clickAudio.play();
   profile.classList.add('buttonAnimate');
   setTimeout(() => {
     profile.classList.remove('buttonAnimate');
   }, 310);
+  menuBoardContainer.style.display = 'none';
+  profileContainer.style.display = 'flex';
 };
 
-coinCon.onclick = (e) => {
+const profileBackBtn = document.querySelector('.profileBackBtn');
+profileBackBtn.onclick = () => {
   clickAudio.play();
-  coinCon.classList.add('buttonAnimate');
+  profileBackBtn.classList.add('buttonAnimate');
   setTimeout(() => {
-    coinCon.classList.remove('buttonAnimate');
+    profileBackBtn.classList.remove('buttonAnimate');
   }, 310);
+  menuBoardContainer.style.display = 'flex';
+  profileContainer.style.display = 'none';
 };
+
+coinCon.forEach((con) => {
+  con.onclick = (e) => {
+    clickAudio.play();
+    con.classList.add('buttonAnimate');
+    setTimeout(() => {
+      con.classList.remove('buttonAnimate');
+    }, 310);
+  };
+});
 
 getCoin.onclick = (e) => {
   clickAudio.play();
@@ -511,12 +517,116 @@ getCoin.onclick = (e) => {
   }, 310);
 };
 
+const quitConfirm = document.querySelector('.quitConfirm');
+const yesBtn = document.querySelector('.yesBtn');
+const noBtn = document.querySelector('.noBtn');
+
 quitBtn.addEventListener('click', (e) => {
   quitBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     quitBtn.classList.remove('buttonAnimate');
-    if (!canStart) return;
-    gameContainer.style.display = 'none';
-    menuBoardContainer.style.display = 'flex';
+    if (!canStart) {
+      quitConfirm.firstElementChild.textContent = "You can't quit in the game!";
+      yesBtn.style.display = 'none';
+      noBtn.textContent = 'OK';
+    } else {
+      yesBtn.style.display = 'block';
+      noBtn.textContent = 'NO';
+    }
+    quitConfirm.style.display = 'flex';
+    yesBtn.onclick = () => {
+      gameContainer.style.display = 'none';
+      menuBoardContainer.style.display = 'flex';
+      quitConfirm.style.display = 'none';
+    };
+    noBtn.onclick = () => {
+      quitConfirm.style.display = 'none';
+    };
   }, 310);
 });
+
+const volumeControl = document.querySelector('.volumeControl');
+const settingContainer = document.querySelector('.settingContainer');
+const settingBackBtn = document.querySelector('.settingBackBtn');
+settingBtn.onclick = (e) => {
+  clickAudio.play();
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+  }, 310);
+  menuBoardContainer.style.display = 'none';
+  settingContainer.style.display = 'flex';
+};
+
+settingBackBtn.onclick = () => {
+  clickAudio.play();
+
+  settingBackBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    settingBackBtn.classList.remove('buttonAnimate');
+  }, 310);
+  settingContainer.style.display = 'none';
+  menuBoardContainer.style.display = 'flex';
+};
+
+const musicBtn = document.querySelector('.musicBtn');
+
+musicBtn.addEventListener('input', () => {
+  clickAudio.play();
+
+  if (musicBtn.checked) {
+    volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
+    musicVolume = startAudio.volume;
+    startAudio.volume = 0;
+    isMuted = true;
+  } else {
+    volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
+    startAudio.volume = musicVolume;
+    isMuted = false;
+  }
+  startAudio.play();
+});
+
+volumeControl.addEventListener('input', () => {
+  let { value } = volumeControl;
+  volumeControl.style.backgroundSize = value + '% 100%';
+  startAudio.volume = value / 100;
+  centerAnimationAudio.volume = value / 100;
+  clockAudio.volume = value / 100;
+  clickAudio.volume = value / 100;
+  lossAudio.volume = value / 100;
+  winAudio.volume = value / 100;
+  endAudio.volume = value / 100;
+  coinDropAudio.volume = value / 100;
+  if (isMuted) {
+    startAudio.pause();
+  }
+});
+
+const privacy = document.querySelector('.privacy');
+const userAgreement = document.querySelector('.userAgreement');
+const aboutBettingSlots = document.querySelector('.aboutBettingSlots');
+
+privacy.onclick = () => {
+  clickAudio.play();
+  privacy.classList.add('buttonAnimate');
+  setTimeout(() => {
+    privacy.classList.remove('buttonAnimate');
+  }, 310);
+};
+
+userAgreement.onclick = () => {
+  clickAudio.play();
+  userAgreement.classList.add('buttonAnimate');
+  setTimeout(() => {
+    userAgreement.classList.remove('buttonAnimate');
+  }, 310);
+};
+aboutBettingSlots.onclick = () => {
+  clickAudio.play();
+  aboutBettingSlots.classList.add('buttonAnimate');
+  setTimeout(() => {
+    aboutBettingSlots.classList.remove('buttonAnimate');
+  }, 310);
+};
