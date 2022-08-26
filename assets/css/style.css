@@ -915,6 +915,9 @@ body {
     width: 100%;
   }
 }
+.update {
+  margin-left: 0.5rem;
+}
 
 .start-loading::before {
   content: 'Game is starting...';

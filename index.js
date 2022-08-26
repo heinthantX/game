@@ -459,7 +459,7 @@ menuPlayBtn.addEventListener('click', () => {
         loadingBar.classList.remove('loadingAnimation');
       })
       .catch((e) => console.log(e));
-  }, 310);
+  }, 3100);
 });
 
 const volumeBtn = document.getElementById('volumeBtn');
