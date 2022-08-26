@@ -259,7 +259,7 @@ startBtn.addEventListener('click', () => {
       }, 1000 * 7);
       setTimeout(() => {
         clearInterval(interval2Id);
-        centerAnimation(400, 10);
+        centerAnimation(400, random);
       }, 1000 * 10);
     }
     count--;
