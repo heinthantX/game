@@ -6,7 +6,7 @@ html {
 }
 
 :root {
-  --hell: 0%;
+  --hell: 70%;
 }
 
 body {
@@ -911,7 +911,7 @@ body {
 }
 
 .loadingAnimation {
-  animation: loading 1ms forwards;
+  animation: loading 1s forwards;
 }
 
 @keyframes loading {
