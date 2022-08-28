@@ -41,10 +41,6 @@ const coinDropAudio = new Audio('./assets/audio/CoinGold AMA01_88_1.wav');
 const lossAudio = new Audio('./assets/audio/Stage Failed.wav');
 const winAudio = new Audio('./assets/audio/Happy Win Game.wav');
 
-let current = 0;
-const root = document.documentElement;
-const loadingBar = document.querySelector('.loading');
-const startLoading = document.querySelector('.start-loading');
 function getImage(url) {
   return new Promise(function (resolve, reject) {
     var img = new Image();
@@ -55,23 +51,6 @@ function getImage(url) {
       reject(url);
     };
     img.src = url;
-  }).then(() => {
-    current += 3.8463;
-    root.style.setProperty('--hell', current + '%');
-    let getPropertyValue = Math.floor(
-      parseInt(root.style.getPropertyValue('--hell'))
-    );
-    if (getPropertyValue == 100) {
-      current = 0;
-      menuBoardContainer.style.display = 'none';
-      startLoading.style.visibility = 'hidden';
-      achievementContainer.style.display = 'none';
-      settingContainer.style.display = 'none';
-      profileContainer.style.display = 'none';
-      loadingBar.classList.remove('loadingAnimation');
-      root.style.setProperty('--hell', current + '%');
-      gameContainer.style.display = 'flex';
-    }
   });
 }
 
@@ -485,10 +464,37 @@ menuPlayBtn.addEventListener('click', () => {
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
   }, 310);
-
+  const loadingBar = document.querySelector('.loading');
+  const startLoading = document.querySelector('.start-loading');
   startLoading.style.visibility = 'visible';
   loadingBar.classList.add('loadingAnimation');
-  gameContainerPreloader();
+  const root = document.documentElement;
+  setTimeout(() => {
+    gameContainerPreloader()
+      .then(() => {
+        let percentage = 70;
+        new Promise((res, rej) => {
+          let progressStatusId = setInterval(() => {
+            percentage += 0.1;
+            root.style.setProperty('--hell', percentage + '%');
+            if (Math.floor(percentage) == 100) {
+              res();
+              clearInterval(progressStatusId);
+            }
+          }, 1);
+        }).then(() => {
+          menuBoardContainer.style.display = 'none';
+          startLoading.style.visibility = 'hidden';
+          achievementContainer.style.display = 'none';
+          settingContainer.style.display = 'none';
+          profileContainer.style.display = 'none';
+          loadingBar.classList.remove('loadingAnimation');
+          root.style.setProperty('--hell', 70 + '%');
+          gameContainer.style.display = 'flex';
+        });
+      })
+      .catch((e) => console.log(e));
+  }, 3100);
 });
 
 const volumeBtn = document.getElementById('volumeBtn');
