@@ -45,6 +45,7 @@ let current = 0;
 const root = document.documentElement;
 const loadingBar = document.querySelector('.loading');
 const startLoading = document.querySelector('.start-loading');
+let id;
 function getImage(url) {
   return new Promise(function (resolve, reject) {
     var img = new Image();
@@ -57,25 +58,35 @@ function getImage(url) {
     img.src = url;
   }).then(() => {
     current += 3.8463;
-    root.style.setProperty('--hell', current + '%');
-    let getPropertyValue = Math.floor(
-      parseInt(root.style.getPropertyValue('--hell'))
-    );
-    if (getPropertyValue == 100) {
-      current = 0;
-      menuBoardContainer.style.display = 'none';
-      startLoading.style.visibility = 'hidden';
-      achievementContainer.style.display = 'none';
-      settingContainer.style.display = 'none';
-      profileContainer.style.display = 'none';
-      loadingBar.classList.remove('loadingAnimation');
-      root.style.setProperty('--hell', current + '%');
-      gameContainer.style.display = 'flex';
-    }
+    clearInterval(id);
+    let getPropertyValue = parseFloat(root.style.getPropertyValue('--hell'));
+    id = setInterval(() => {
+      getPropertyValue += 0.1;
+      root.style.setProperty('--hell', getPropertyValue + '%');
+      console.log(getPropertyValue);
+      if (current < getPropertyValue) {
+        clearInterval(id);
+      }
+      if (Math.floor(getPropertyValue) == 100) {
+        clearInterval(id);
+        current = 0;
+        menuBoardContainer.style.display = 'none';
+        startLoading.style.visibility = 'hidden';
+        achievementContainer.style.display = 'none';
+        settingContainer.style.display = 'none';
+        profileContainer.style.display = 'none';
+        loadingBar.classList.remove('loadingAnimation');
+        root.style.setProperty('--hell', current + '%');
+        gameContainer.style.display = 'flex';
+        isPlay = false;
+      }
+    }, 1);
   });
 }
 
 function gameContainerPreloader() {
+  root.style.setProperty('--hell', 0 + '%');
+
   return Promise.all([
     getImage('./assets/images/square-buttons/sea-bg.png'),
     getImage('./assets/images/btn/play.png'),
@@ -478,6 +489,7 @@ function clearALlValue() {
 //   clearALlValue();
 // });
 
+let isPlay = false;
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
   startAudio.play();
@@ -485,7 +497,8 @@ menuPlayBtn.addEventListener('click', () => {
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
   }, 310);
-
+  if (isPlay) return;
+  isPlay = true;
   startLoading.style.visibility = 'visible';
   loadingBar.classList.add('loadingAnimation');
   gameContainerPreloader();
