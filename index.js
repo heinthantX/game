@@ -41,73 +41,6 @@ const coinDropAudio = new Audio('./assets/audio/CoinGold AMA01_88_1.wav');
 const lossAudio = new Audio('./assets/audio/Stage Failed.wav');
 const winAudio = new Audio('./assets/audio/Happy Win Game.wav');
 
-let current = 0;
-const root = document.documentElement;
-const loadingBar = document.querySelector('.loading');
-const startLoading = document.querySelector('.start-loading');
-function getImage(url) {
-  return new Promise(function (resolve, reject) {
-    var img = new Image();
-    img.onload = function () {
-      resolve(url);
-    };
-    img.onerror = function () {
-      reject(url);
-    };
-    img.src = url;
-  }).then(() => {
-    current += 3.8463;
-    root.style.setProperty('--hell', current + '%');
-    let getPropertyValue = Math.floor(
-      parseInt(root.style.getPropertyValue('--hell'))
-    );
-    if (getPropertyValue == 100) {
-      current = 0;
-      menuBoardContainer.style.display = 'none';
-      startLoading.style.visibility = 'hidden';
-      achievementContainer.style.display = 'none';
-      settingContainer.style.display = 'none';
-      profileContainer.style.display = 'none';
-      loadingBar.classList.remove('loadingAnimation');
-      root.style.setProperty('--hell', current + '%');
-      gameContainer.style.display = 'flex';
-    }
-  });
-}
-
-function gameContainerPreloader() {
-  return Promise.all([
-    getImage('./assets/images/square-buttons/sea-bg.png'),
-    getImage('./assets/images/btn/play.png'),
-    getImage('./assets/images/btn/cross.png'),
-    getImage('./assets/images/round-buttons/dog.png'),
-    getImage('./assets/images/round-buttons/monkey.png'),
-    getImage('./assets/images/round-buttons/sheep.png'),
-    getImage('./assets/images/round-buttons/elephant.png'),
-    getImage('./assets/images/round-buttons/seahorse.png'),
-    getImage('./assets/images/round-buttons/jellyfish.png'),
-    getImage('./assets/images/round-buttons/dolphin.png'),
-    getImage('./assets/images/round-buttons/shark.png'),
-    getImage('./assets/images/square-buttons/bird.png'),
-    getImage('./assets/images/round-buttons/whale.png'),
-    getImage('./assets/images/round-buttons/sea.png'),
-    getImage('./assets/images/round-buttons/land.png'),
-    getImage('./assets/images/square-buttons/dog(top corner).png'),
-    getImage('./assets/images/square-buttons/whale(top corner).png'),
-    getImage('./assets/images/square-buttons/seahorse(right side).png'),
-    getImage('./assets/images/square-buttons/jellyfish(top corner).png'),
-    getImage('./assets/images/square-buttons/whale(right side).png'),
-    getImage('./assets/images/square-buttons/dolphin(bottom).png'),
-    getImage('./assets/images/square-buttons/shark(right side).png'),
-    getImage('./assets/images/square-buttons/elephant(bottom).png'),
-    getImage('./assets/images/round-buttons/bird.png'),
-    getImage('./assets/images/square-buttons/sheep(left side).png'),
-    getImage('./assets/images/square-buttons/monkey(left side).png'),
-  ]);
-}
-
-// party.resolvableShapes['myNewShape'] =
-//   '<img src="./assets/images/pngwing.com.png" alt="">';
 function partyAnimation() {
   party.confetti(document.body, {
     count: party.variation.range(200, 400),
@@ -275,7 +208,6 @@ let intervalId;
 let interval2Id;
 let i = 0;
 let canStart = true;
-let userCoinBeforeBet;
 startBtn.addEventListener('click', () => {
   clickAudio.play();
   startBtn.classList.add('buttonAnimate');
@@ -285,9 +217,7 @@ startBtn.addEventListener('click', () => {
 
   if (intervalId || !canStart) return;
   canStart = false;
-  updateQuitConBtn();
   let random = Math.floor(Math.random() * centerImg.length - 1);
-  userCoinBeforeBet = userCoin;
   canBet = true;
   let count = 30;
   const circleEle = document.getElementById('circle');
@@ -304,6 +234,9 @@ startBtn.addEventListener('click', () => {
     if (count == 30) {
       clockAudio.load();
       clockAudio.play();
+      // clockAudio.addEventListener('ended', () => {
+      //   clockAudio.play();
+      // });
       if (!isMuted) {
         startAudio.pause();
       }
@@ -344,7 +277,6 @@ clearBtn.addEventListener('click', () => {
   updateCoinTextContent();
   clearALlValue();
   stop();
-  updateQuitConBtn();
 });
 
 function stop() {
@@ -382,15 +314,17 @@ function centerAnimation(x, random) {
         clearInterval(animateId);
         clearALlValue();
         updateCoinTextContent();
+        if (isWon) {
+          coinDropAudio.play();
+        }
         if (!isMuted) {
           startAudio.play();
         }
+        canStart = true;
+
         centerImg[i].classList.remove('animate');
         winLoseContainer.style.display = 'none';
         winLoseContainer.classList.remove('fadeIn');
-        coinDropAudio.play();
-        canStart = true;
-        updateQuitConBtn();
       }, 1000 * 5);
     } else {
       if (i < 31) {
@@ -403,47 +337,56 @@ function centerAnimation(x, random) {
 }
 
 // let clonedBetList;
+let isWon = false;
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
   if (!totalBet) {
     endAudio.play();
     return;
   }
-  userCoin +=
-    bet.betList[indexMap[i]].myValue * bet.betList[indexMap[i]].multiple;
+  let won =
+    bet.betList[indexMap[i]].myValue * (bet.betList[indexMap[i]].multiple + 1) -
+    totalBet;
+  let whichWin;
   if (land.includes(indexMap[i])) {
-    userCoin += bet.betList[10].myValue * bet.betList[10].multiple;
+    won += bet.betList[10].myValue * bet.betList[10].multiple;
+    whichWin = 10;
   } else if (aqua.includes(indexMap[i])) {
-    userCoin += bet.betList[11].myValue * bet.betList[11].multiple;
+    won += bet.betList[11].myValue * bet.betList[11].multiple;
+    whichWin = 11;
   }
-  let won = userCoin - userCoinBeforeBet;
-
+  if (!bet.betList[10].myValue || !bet.betList[11].myValue) {
+    won += bet.betList[whichWin].myValue;
+  }
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   if (won == 0) {
+    isWon = false;
     winText.textContent = 'Win';
     winText.style.color = '#fff';
     win.textContent = 0;
     winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
   } else if (won > 0) {
+    isWon = true;
     winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
     winText.textContent = 'Win';
     winText.style.color = '#3fff00';
     win.textContent = won;
+    userCoin += won;
   } else {
+    isWon = false;
     winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
       won
     )} coin.`;
     winText.textContent = 'Lose';
     winText.style.color = '#FF2400';
-
     win.textContent = Math.abs(won);
   }
   setTimeout(() => {
-    if (won > 0) {
-      winAudio.play();
-      partyAnimation();
-    } else {
+    if (!isWon) {
       lossAudio.play();
+    } else {
+      partyAnimation();
+      winAudio.play();
     }
   }, 300);
   winLoseContainer.style.display = 'flex';
@@ -478,17 +421,45 @@ function clearALlValue() {
 //   clearALlValue();
 // });
 
+function getImage(url) {
+  return new Promise((res, rej) => {
+    let img = new Image();
+    img.onload = () => {
+      res();
+    };
+    img.onerror = () => {
+      rej();
+    };
+    img.src = url;
+  });
+}
+
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
   startAudio.play();
+  // startAudio.addEventListener('ended', () => {
+  //   startAudio.play();
+  // });
   menuPlayBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
   }, 310);
-
+  const startLoading = document.querySelector('.start-loading');
+  const loadingBar = document.querySelector('.loading');
   startLoading.style.visibility = 'visible';
   loadingBar.classList.add('loadingAnimation');
-  gameContainerPreloader();
+  setTimeout(() => {
+    Promise.all([getImage('./assets/images/square-buttons/sea-bg.png')])
+      .then(() => {
+        menuBoardContainer.style.display = 'none';
+        gameContainer.style.display = 'flex';
+        startLoading.style.visibility = 'hidden';
+        settingContainer.style.display = 'none';
+        profileContainer.style.display = 'none';
+        loadingBar.classList.remove('loadingAnimation');
+      })
+      .catch((e) => console.log(e));
+  }, 3100);
 });
 
 const volumeBtn = document.getElementById('volumeBtn');
@@ -507,14 +478,20 @@ volumeBtn.onclick = (e) => {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
     musicVolume = startAudio.volume;
     startAudio.volume = 0;
-    musicBtn.checked = true;
     isMuted = true;
   } else {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
     startAudio.volume = musicVolume;
-    musicBtn.checked = false;
     isMuted = false;
   }
+};
+achievementBtn.onclick = (e) => {
+  clickAudio.play();
+  const { target } = e;
+  target.classList.add('buttonAnimate');
+  setTimeout(() => {
+    target.classList.remove('buttonAnimate');
+  }, 310);
 };
 
 const profileContainer = document.querySelector('.profileContainer');
@@ -523,9 +500,9 @@ profile.onclick = (e) => {
   profile.classList.add('buttonAnimate');
   setTimeout(() => {
     profile.classList.remove('buttonAnimate');
-    menuBoardContainer.style.display = 'none';
-    profileContainer.style.display = 'flex';
   }, 310);
+  menuBoardContainer.style.display = 'none';
+  profileContainer.style.display = 'flex';
 };
 
 const profileBackBtn = document.querySelector('.profileBackBtn');
@@ -534,9 +511,9 @@ profileBackBtn.onclick = () => {
   profileBackBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     profileBackBtn.classList.remove('buttonAnimate');
-    menuBoardContainer.style.display = 'flex';
-    profileContainer.style.display = 'none';
   }, 310);
+  menuBoardContainer.style.display = 'flex';
+  profileContainer.style.display = 'none';
 };
 
 coinCon.forEach((con) => {
@@ -561,33 +538,28 @@ const quitConfirm = document.querySelector('.quitConfirm');
 const yesBtn = document.querySelector('.yesBtn');
 const noBtn = document.querySelector('.noBtn');
 
-const updateQuitConBtn = () => {
-  if (!canStart) {
-    quitConfirm.firstElementChild.textContent = "You can't quit in the game!";
-    yesBtn.style.display = 'none';
-    noBtn.textContent = 'OK';
-  } else {
-    quitConfirm.firstElementChild.textContent = 'Do you want to quit?';
-    yesBtn.style.display = 'block';
-    noBtn.textContent = 'NO';
-  }
-};
-
 quitBtn.addEventListener('click', (e) => {
   quitBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     quitBtn.classList.remove('buttonAnimate');
+    if (!canStart) {
+      quitConfirm.firstElementChild.textContent = "You can't quit in the game!";
+      yesBtn.style.display = 'none';
+      noBtn.textContent = 'OK';
+    } else {
+      yesBtn.style.display = 'block';
+      noBtn.textContent = 'NO';
+    }
+    quitConfirm.style.display = 'flex';
+    yesBtn.onclick = () => {
+      gameContainer.style.display = 'none';
+      menuBoardContainer.style.display = 'flex';
+      quitConfirm.style.display = 'none';
+    };
+    noBtn.onclick = () => {
+      quitConfirm.style.display = 'none';
+    };
   }, 310);
-  updateQuitConBtn();
-  quitConfirm.style.display = 'flex';
-  yesBtn.onclick = () => {
-    gameContainer.style.display = 'none';
-    menuBoardContainer.style.display = 'flex';
-    quitConfirm.style.display = 'none';
-  };
-  noBtn.onclick = () => {
-    quitConfirm.style.display = 'none';
-  };
 });
 
 const volumeControl = document.querySelector('.volumeControl');
@@ -595,12 +567,13 @@ const settingContainer = document.querySelector('.settingContainer');
 const settingBackBtn = document.querySelector('.settingBackBtn');
 settingBtn.onclick = (e) => {
   clickAudio.play();
-  settingBtn.classList.add('buttonAnimate');
+  const { target } = e;
+  target.classList.add('buttonAnimate');
   setTimeout(() => {
-    settingBtn.classList.remove('buttonAnimate');
-    menuBoardContainer.style.display = 'none';
-    settingContainer.style.display = 'flex';
+    target.classList.remove('buttonAnimate');
   }, 310);
+  menuBoardContainer.style.display = 'none';
+  settingContainer.style.display = 'flex';
 };
 
 settingBackBtn.onclick = () => {
@@ -609,9 +582,9 @@ settingBackBtn.onclick = () => {
   settingBackBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     settingBackBtn.classList.remove('buttonAnimate');
-    settingContainer.style.display = 'none';
-    menuBoardContainer.style.display = 'flex';
   }, 310);
+  settingContainer.style.display = 'none';
+  menuBoardContainer.style.display = 'flex';
 };
 
 const musicBtn = document.querySelector('.musicBtn');
@@ -672,29 +645,5 @@ aboutBettingSlots.onclick = () => {
   aboutBettingSlots.classList.add('buttonAnimate');
   setTimeout(() => {
     aboutBettingSlots.classList.remove('buttonAnimate');
-  }, 310);
-};
-
-const achievementContainer = document.querySelector('.achievementContainer');
-achievementBtn.onclick = (e) => {
-  clickAudio.play();
-  const { target } = e;
-  target.classList.add('buttonAnimate');
-  setTimeout(() => {
-    target.classList.remove('buttonAnimate');
-    menuBoardContainer.style.display = 'none';
-    achievementContainer.style.display = 'flex';
-  }, 310);
-};
-
-const achievementBackBtn = document.querySelector('.achievementBackBtn');
-achievementBackBtn.onclick = (e) => {
-  clickAudio.play();
-  const { target } = e;
-  target.classList.add('buttonAnimate');
-  setTimeout(() => {
-    target.classList.remove('buttonAnimate');
-    achievementContainer.style.display = 'none';
-    menuBoardContainer.style.display = 'flex';
   }, 310);
 };

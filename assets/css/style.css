@@ -1,12 +1,9 @@
 @import url(./reset.css);
-@import url('https://fonts.googleapis.com/css2?family=Eczar:wght@400;500;600;700;800&display=swap');
-html {
-  font-family: 'Eczar', serif;
-  font-size: 16px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300&family=Montserrat:ital,wght@1,300&family=Open+Sans:wght@300&family=Quicksand:wght@300&family=Raleway:wght@100&family=Roboto:wght@100;300;400;500&display=swap');
 
-:root {
-  --hell: 0%;
+html {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
 }
 
 body {
@@ -105,11 +102,9 @@ body {
 }
 
 .game__container-left {
-  width: 25%;
+  width: 28%;
   height: 100%;
   display: flex;
-  margin-right: 1.4%;
-  gap: 2px;
 }
 
 .leftSideBoxContainer,
@@ -199,7 +194,7 @@ body {
 }
 
 .game__container-center {
-  width: 49%;
+  width: 45%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -484,13 +479,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   padding: 0 0.5rem 0 0.5rem;
   box-sizing: border-box;
-  box-shadow: rgb(0 0 0 / 9%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px,
-    rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px,
-    rgb(0 0 0 / 9%) 0px 32px 16px;
 }
 
 .game__container-center-bottom-item1,
@@ -501,7 +493,6 @@ body {
 }
 
 .game__container-center-bottom p {
-  font-size: 1.3rem;
   color: #fff;
 }
 
@@ -518,7 +509,7 @@ body {
 }
 
 .game__container-right {
-  width: 25%;
+  width: 30%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -527,7 +518,7 @@ body {
 }
 .game__container-right .box {
   padding: 0px;
-  width: 100%;
+  width: 93%;
   height: 12.7%;
   display: flex;
   flex-direction: row;
@@ -614,7 +605,7 @@ body {
   padding: 0px;
   width: 100%;
   height: 13%;
-  padding-left: 1rem;
+  padding-left: 40px;
 }
 
 .game__container-right .btn img {
@@ -630,17 +621,14 @@ body {
   align-items: center;
   justify-content: center;
   padding: 0px;
-  width: 80%;
+  width: 75%;
   height: 12%;
   background-image: linear-gradient(to bottom, #ffe600, #ff7b01);
   border-radius: 12px;
   gap: 4px;
   margin-top: 0.2rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   box-sizing: border-box;
-  box-shadow: rgb(0 0 0 / 9%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px,
-    rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px,
-    rgb(0 0 0 / 9%) 0px 32px 16px;
 }
 .game__container-right .get-coin img {
   width: 15%;
@@ -900,7 +888,6 @@ body {
   margin-top: 100px;
   visibility: hidden;
   position: relative;
-  overflow: hidden;
 }
 
 .loading {
@@ -911,15 +898,21 @@ body {
 }
 
 .loadingAnimation {
-  animation: loading 1ms forwards;
+  animation: loading 3s forwards;
 }
 
 @keyframes loading {
   0% {
     width: 0%;
   }
+  50% {
+    width: 75%;
+  }
+  80% {
+    width: 78%;
+  }
   100% {
-    width: var(--hell);
+    width: 100%;
   }
 }
 .update {
@@ -937,7 +930,7 @@ body {
 }
 
 .buttonAnimate {
-  animation: btnAnimate 300ms ease-in;
+  animation: btnAnimate 300ms;
 }
 
 .profileContainer {
@@ -954,8 +947,7 @@ body {
 }
 
 .profileBackBtn,
-.settingBackBtn,
-.achievementBackBtn {
+.settingBackBtn {
   position: absolute;
   top: 25px;
   left: 30px;
@@ -1062,8 +1054,7 @@ body {
   width: 60%;
 }
 
-.settingContainer,
-.achievementContainer {
+.settingContainer {
   position: relative;
   display: none;
   background-color: white;
@@ -1086,19 +1077,13 @@ body {
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 }
 
 .settingContainer > div span {
   color: #ffa900;
   font-size: 2.5rem;
   font-weight: 900;
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
 }
 
 .settingContainer > div {
@@ -1117,9 +1102,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: #ffa900;
   box-sizing: border-box;
   border-radius: 20px;
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
 }
 
 .volumeControl {
@@ -1127,12 +1112,10 @@ body {
   height: 10px;
   appearance: none;
   -webkit-appearance: none;
-  background: cornsilk;
-  background-image: linear-gradient(rgb(13, 181, 181), rgb(7, 255, 255));
+  background-image: linear-gradient(aqua, aqua);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   border-radius: 20px;
-  cursor: pointer;
 }
 
 .volumeControl::-webkit-slider-thumb {
@@ -1162,7 +1145,8 @@ body {
   width: 110px;
   height: 45px;
   border-radius: 25px;
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
+  /* background: linear-gradient(to bottom, #ffe600, #ff7b01); */
+  background: #ffa900;
   outline: none;
 }
 
@@ -1214,7 +1198,7 @@ body {
 }
 
 .switch input:not(:checked) {
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
+  background: #ffa900;
   transition: background 0.4s;
 }
 
@@ -1236,10 +1220,9 @@ body {
 }
 
 .privacy,
-.userAgreement,
-.aboutBettingSlots,
-.leaderboardHeader {
-  /* width: 180px; */
+.userAgreement {
+  background: #ffa900;
+  width: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1247,23 +1230,21 @@ body {
   font-size: 1.3rem;
   font-weight: 700;
   text-align: unset !important;
-  padding: 10px 36px;
+  padding: 10px 20px;
   border-radius: 30px;
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
-  box-shadow: rgb(0 0 0 / 9%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px,
-    rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px,
-    rgb(0 0 0 / 9%) 0px 32px 16px;
-  cursor: pointer;
-}
-
-.privacy,
-.userAgreement > p {
-  display: inline-block;
-  white-space: nowrap;
 }
 
 .aboutBettingSlots {
-  padding: 10px 60px;
+  background: #ffa900;
+  width: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 30px;
 }
 
 .quitConfirm {
@@ -1273,15 +1254,16 @@ body {
   text-align: center;
   justify-content: space-evenly;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 700;
   border-radius: 20px;
   color: #fff;
   background: linear-gradient(
     65deg,
     rgba(4, 125, 180, 0.85),
-    rgba(4, 125, 180, 0.7)
+    rgba(4, 125, 180, 0.8)
   );
+  transform: scale(1);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1354,68 +1336,18 @@ body {
   border: 1px solid rgb(226, 12, 12);
 }
 
-.tableWarpper {
-  border: 7.2px solid #ffd700;
-  border-radius: 35px;
-  width: 35%;
-  height: 75%;
-  box-sizing: border-box;
-}
-
-.leaderboardTable {
-  border-radius: 35px;
-  border-collapse: collapse;
-  border-style: hidden;
-  border-spacing: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.leaderboardTable td {
-  border: 7px solid #ffd700;
-  width: 60%;
-}
-
-.leaderboardTable tr td:first-child {
-  width: 40%;
-}
-
-.leaderboardTable tr td > div {
-  width: 100%;
-  height: 100%;
-  padding: 0 10px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: rgb(235, 82, 0);
-}
-.leaderboardTable tr td:last-child > div {
-  justify-content: flex-start;
-}
-
-.leaderboardHeader {
-  background: #ffd700;
-  color: rgb(235, 82, 0);
-  font-size: 1.5rem;
-  font-weight: 900;
-  box-shadow: none;
-}
-
 @keyframes btnAnimate {
   0% {
     transform: scale(1);
   }
   40% {
-    transform: scale(0.85) translateY(4px);
+    transform: scale(0.8);
   }
-  85% {
-    transform: scale(1.1) translateY(-2px);
+  70% {
+    transform: scale(1.15);
   }
   100% {
-    transform: scale(1) translateY(0);
+    transform: scale(1);
   }
 }
 
@@ -1444,7 +1376,7 @@ body {
   width: 100%;
   height: 11%;
   margin: 8px 0;
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 
 #quitBtn {
@@ -1461,7 +1393,6 @@ body {
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px,
     rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px,
     rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  box-sizing: border-box;
 }
 
 @keyframes fadeIn {
