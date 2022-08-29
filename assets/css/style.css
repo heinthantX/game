@@ -1397,8 +1397,16 @@ body {
   padding-right: 16px;
 }
 
-.leaderboardTable tr td:last-child > div > img {
-  height: 25px;
+.first {
+  color: #f7d000;
+}
+
+.second {
+  color: #bababa;
+}
+
+.third {
+  color: #b87333;
 }
 
 .leaderboardHeader {
