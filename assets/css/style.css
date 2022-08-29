@@ -1393,7 +1393,12 @@ body {
   color: rgb(235, 82, 0);
 }
 .leaderboardTable tr td:last-child > div {
-  justify-content: flex-start;
+  justify-content: space-between;
+  padding-right: 16px;
+}
+
+.leaderboardTable tr td:last-child > div > img {
+  height: 25px;
 }
 
 .leaderboardHeader {

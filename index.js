@@ -461,7 +461,6 @@ let firstStart = true;
 let playBtnClicked = false;
 menuPlayBtn.addEventListener('click', () => {
   clickAudio.play();
-  startAudio.play();
   menuPlayBtn.classList.add('buttonAnimate');
   setTimeout(() => {
     menuPlayBtn.classList.remove('buttonAnimate');
@@ -522,15 +521,17 @@ volumeBtn.onclick = (e) => {
   setTimeout(() => {
     volumeBtn.classList.remove('buttonAnimate');
   }, 310);
-  if (startAudio.volume != 0) {
+  if (!startAudio.paused) {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
-    musicVolume = startAudio.volume;
-    startAudio.volume = 0;
+    // musicVolume = startAudio.volume;
+    // startAudio.volume = 0;
+    startAudio.pause();
     musicBtn.checked = true;
     isMuted = true;
   } else {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
-    startAudio.volume = musicVolume;
+    // startAudio.volume = musicVolume;
+    startAudio.play();
     musicBtn.checked = false;
     isMuted = false;
   }
@@ -641,14 +642,16 @@ musicBtn.addEventListener('input', () => {
   if (musicBtn.checked) {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-xmark';
     musicVolume = startAudio.volume;
-    startAudio.volume = 0;
+    // startAudio.volume = 0;
+    startAudio.pause();
     isMuted = true;
   } else {
     volumeBtn.firstElementChild.classList = 'fa-solid fa-volume-high';
-    startAudio.volume = musicVolume;
+    // startAudio.volume = musicVolume;
+    startAudio.play();
     isMuted = false;
   }
-  startAudio.play();
+  // startAudio.play();
 });
 
 volumeControl.addEventListener('input', () => {
@@ -662,9 +665,9 @@ volumeControl.addEventListener('input', () => {
   winAudio.volume = value / 100;
   endAudio.volume = value / 100;
   coinDropAudio.volume = value / 100;
-  if (isMuted) {
-    startAudio.pause();
-  }
+  // if (isMuted) {
+  //   startAudio.pause();
+  // }
 });
 
 const privacy = document.querySelector('.privacy');
