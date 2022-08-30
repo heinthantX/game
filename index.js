@@ -82,6 +82,14 @@ function gameContainerPreloader() {
     getImage('./assets/images/round-buttons/bird.png'),
     getImage('./assets/images/square-buttons/sheep(left side).png'),
     getImage('./assets/images/square-buttons/monkey(left side).png'),
+    getImage('./assets/images/animation-gif/dog.gif'),
+    getImage('./assets/images/animation-gif/sheep.gif'),
+    getImage('./assets/images/animation-gif/elephant.gif'),
+    getImage('./assets/images/animation-gif/jellyfish.gif'),
+    getImage('./assets/images/animation-gif/dolphin.gif'),
+    getImage('./assets/images/animation-gif/shark.gif'),
+    getImage('./assets/images/animation-gif/whale.gif'),
+    getImage('./assets/images/animation-gif/monkey.gif'),
   ]);
 }
 
