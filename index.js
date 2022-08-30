@@ -18,7 +18,7 @@ const menuPlayBtn = document.getElementById('menuPlayBtn');
 const menuBoardContainer = document.querySelector('.menu-board__container');
 const gameContainer = document.querySelector('.game__container');
 const quitBtn = document.getElementById('quitBtn');
-const winLoseContainer = document.querySelector('.win-lose-container');
+// const winLoseContainer = document.querySelector('.win-lose-container');
 const profile = document.querySelector('.profile');
 const coinCon = document.querySelectorAll('.coin-con');
 const getCoin = document.querySelector('.get-coin');
@@ -137,7 +137,7 @@ let bet = {
       multiple: 24,
     },
     {
-      name: 'tortoise',
+      name: 'bird',
       myValue: 0,
       multiple: 24,
     },
@@ -170,6 +170,20 @@ const updateCoinTextContent = () => {
   coin.forEach((coin) => (coin.textContent = userCoin.toLocaleString()));
 };
 updateCoinTextContent();
+
+const wonAnimalSrc = {
+  0: './assets/images/animation-gif/dog.gif',
+  1: './assets/images/animation-gif/monkey.gif',
+  2: './assets/images/animation-gif/sheep.gif',
+  3: './assets/images/animation-gif/elephant.gif',
+  4: '',
+  5: './assets/images/animation-gif/jellyfish.gif',
+  6: './assets/images/animation-gif/dolphin.gif',
+  7: './assets/images/animation-gif/shark.gif',
+  8: '',
+  9: './assets/images/animation-gif/whale.gif',
+};
+Object.freeze(wonAnimalSrc);
 
 const indexMap = {
   0: 8,
@@ -264,7 +278,8 @@ startBtn.addEventListener('click', () => {
 
   if (intervalId || !canStart) return;
   canStart = false;
-  updateQuitConBtn();
+  quitConfirm.style.display = 'none';
+  // updateQuitConBtn();
   let random = Math.floor(Math.random() * centerImg.length - 1);
   userCoinBeforeBet = userCoin;
   canBet = true;
@@ -365,8 +380,10 @@ function centerAnimation(x, random) {
           startAudio.play();
         }
         centerImg[i].classList.remove('animate');
-        winLoseContainer.style.display = 'none';
-        winLoseContainer.classList.remove('fadeIn');
+        // winLoseContainer.style.display = 'none';
+        // winLoseContainer.classList.remove('fadeIn');
+        wonAnimal.style.display = 'none';
+        wonAnimal.src = '';
         coinDropAudio.play();
         canStart = true;
         updateQuitConBtn();
@@ -382,6 +399,7 @@ function centerAnimation(x, random) {
 }
 
 // let clonedBetList;
+const wonAnimal = document.getElementById('wonAnimal');
 function calculateWinOrLose(i) {
   let totalBet = bet.total();
   if (!totalBet) {
@@ -402,21 +420,23 @@ function calculateWinOrLose(i) {
     winText.textContent = 'Win';
     winText.style.color = '#fff';
     win.textContent = 0;
-    winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
+    // winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
   } else if (won > 0) {
-    winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
+    // winLoseContainer.firstElementChild.textContent = `Congratulations! You win ${won} coin.`;
     winText.textContent = 'Win';
     winText.style.color = '#3fff00';
     win.textContent = won;
   } else {
-    winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
-      won
-    )} coin.`;
+    // winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
+    //   won
+    // )} coin.`;
     winText.textContent = 'Lose';
     winText.style.color = '#FF2400';
 
     win.textContent = Math.abs(won);
   }
+  wonAnimal.style.display = 'block';
+  wonAnimal.src = wonAnimalSrc[indexMap[i]];
   setTimeout(() => {
     if (won > 0) {
       winAudio.play();
@@ -425,8 +445,8 @@ function calculateWinOrLose(i) {
       lossAudio.play();
     }
   }, 300);
-  winLoseContainer.style.display = 'flex';
-  winLoseContainer.classList.add('fadeIn');
+  // winLoseContainer.style.display = 'flex';
+  // winLoseContainer.classList.add('fadeIn');
 }
 
 function clearALlValue() {

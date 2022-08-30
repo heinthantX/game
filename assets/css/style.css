@@ -749,7 +749,12 @@ body {
   transform: translate(-50%, -50%);
 }
 
-.win-lose-container {
+#wonAnimal {
+  display: none;
+  height: 50%;
+}
+
+/* .win-lose-container {
   width: 55%;
   height: 40%;
   text-align: center;
@@ -765,16 +770,16 @@ body {
   );
   transform: scale(0);
   display: none;
-}
+} */
 
-.win-lose-container p {
+/* .win-lose-container p {
   background: linear-gradient(45deg, #ffe600, #ff7b01);
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
-}
+} */
 
 .img {
   position: relative;
@@ -1402,7 +1407,7 @@ body {
 }
 
 .second {
-  color: #bababa;
+  color: silver;
 }
 
 .third {
