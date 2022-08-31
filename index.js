@@ -23,7 +23,6 @@ const profile = document.querySelector('.profile');
 const coinCon = document.querySelectorAll('.coin-con');
 const getCoin = document.querySelector('.get-coin');
 const winText = document.getElementById('win-text');
-
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
 );
@@ -93,6 +92,50 @@ function gameContainerPreloader() {
     getImage('./assets/images/animation-gif/monkey.gif'),
   ]);
 }
+
+const leftAndRightCircle = document.querySelectorAll(
+  '.left__circle i,.right__circle i'
+);
+const addCircleAnimation = (aniClass) => {
+  leftAndRightCircle.forEach((i) => {
+    i.style.animation = 'none';
+    i.classList.add(aniClass);
+  });
+};
+
+const removeCircleAnimation = (...aniClass) => {
+  let delay = 0;
+  leftAndRightCircle.forEach((i) => {
+    i.classList.remove(...aniClass);
+    i.style.animation = 'animate 4s ease infinite';
+    i.style.animationDelay = delay + 's';
+    delay += 0.3;
+    if (delay === 2.1) {
+      delay = 0;
+    }
+  });
+};
+
+// setTimeout(() => {
+//   leftAndRightCircle = null;
+// }, 1000 * 10);
+// let toAnimateCircle = false;
+// setInterval(() => {
+//   leftAndRightCircle.forEach((i) => {
+//     if (toAnimateCircle) {
+//       i.style.color = 'rgb(105, 4, 4)';
+//       // toAnimateCircle = false;
+//     } else {
+//       i.style.color = 'rgb(253, 38, 38)';
+//       // toAnimateCircle = true;
+//     }
+//   });
+//   if (toAnimateCircle) {
+//     toAnimateCircle = false;
+//   } else {
+//     toAnimateCircle = true;
+//   }
+// }, 500);
 
 // party.resolvableShapes['myNewShape'] =
 //   '<img src="./assets/images/pngwing.com.png" alt="">';
@@ -180,19 +223,64 @@ const updateCoinTextContent = () => {
 };
 updateCoinTextContent();
 
-const wonAnimalSrc = {
-  0: './assets/images/animation-gif/dog.gif',
-  1: './assets/images/animation-gif/monkey.gif',
-  2: './assets/images/animation-gif/sheep.gif',
-  3: './assets/images/animation-gif/elephant.gif',
-  4: './assets/images/animation-gif/seahorse.gif',
-  5: './assets/images/animation-gif/jellyfish.gif',
-  6: './assets/images/animation-gif/dolphin.gif',
-  7: './assets/images/animation-gif/shark.gif',
-  8: '',
-  9: './assets/images/animation-gif/whale.gif',
+// './assets/images/square-buttons/dog(top corner).png
+// './assets/images/square-buttons/whale(top corner).png
+// './assets/images/square-buttons/seahorse(right side).png
+// './assets/images/square-buttons/jellyfish(top corner).png
+// './assets/images/square-buttons/whale(right side).png
+// './assets/images/square-buttons/dolphin(bottom).png')
+// './assets/images/square-buttons/shark(right side).png
+// './assets/images/square-buttons/elephant(bottom).png')
+// './assets/images/round-buttons/bird.png'),
+
+// './assets/images/square-buttons/sheep(left side).png
+// './assets/images/square-buttons/monkey(left side).png
+
+const winAnimalSrc = {
+  0: {
+    gif: './assets/images/animation-gif/dog.gif',
+    srcForWin: './assets/images/square-buttons/dog(top corner).png',
+  },
+  1: {
+    gif: './assets/images/animation-gif/monkey.gif',
+    srcForWin: './assets/images/square-buttons/monkey(left side).png',
+  },
+  2: {
+    gif: './assets/images/animation-gif/sheep.gif',
+    srcForWin: './assets/images/square-buttons/sheep(left side).png',
+  },
+
+  3: {
+    gif: './assets/images/animation-gif/elephant.gif',
+    srcForWin: './assets/images/square-buttons/elephant(bottom).png',
+  },
+  4: {
+    gif: './assets/images/animation-gif/seahorse.gif',
+    srcForWin: './assets/images/square-buttons/seahorse(right side).png',
+  },
+
+  5: {
+    gif: './assets/images/animation-gif/jellyfish.gif',
+    srcForWin: './assets/images/square-buttons/jellyfish(top corner).png',
+  },
+  6: {
+    gif: './assets/images/animation-gif/dolphin.gif',
+    srcForWin: './assets/images/square-buttons/dolphin(bottom).png',
+  },
+  7: {
+    gif: './assets/images/animation-gif/shark.gif',
+    srcForWin: './assets/images/square-buttons/shark(right side).png',
+  },
+  8: {
+    gif: './assets/images/square-buttons/bird.png',
+    srcForWin: './assets/images/square-buttons/bird.png',
+  },
+  9: {
+    gif: './assets/images/animation-gif/whale.gif',
+    srcForWin: './assets/images/square-buttons/whale(top corner).png',
+  },
 };
-Object.freeze(wonAnimalSrc);
+Object.freeze(winAnimalSrc);
 
 const indexMap = {
   0: 8,
@@ -292,7 +380,7 @@ startBtn.addEventListener('click', () => {
   let random = Math.floor(Math.random() * centerImg.length - 1);
   userCoinBeforeBet = userCoin;
   canBet = true;
-  let count = 30;
+  let count = 5;
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
 
@@ -360,6 +448,14 @@ function stop() {
   canStart = true;
 }
 
+const historyCon = document.getElementById('historyCon');
+let winHistory = [];
+const addWinAnimal = (src) => {
+  const img = document.createElement('img');
+  img.src = src;
+  return img;
+};
+
 function centerAnimation(x, random) {
   interval2Id = setInterval(() => {
     centerAnimationAudio.load();
@@ -379,6 +475,15 @@ function centerAnimation(x, random) {
           centerImg[i].classList.add('animate');
         }
       }, 150);
+      if (winHistory.length >= 7) {
+        winHistory.shift();
+        historyCon.removeChild(historyCon.firstElementChild);
+      }
+      winHistory.push(winAnimalSrc[indexMap[i]].srcForWin);
+
+      historyCon.style.display = 'flex';
+
+      historyCon.append(addWinAnimal(winHistory[winHistory.length - 1]));
       calculateWinOrLose(i);
 
       setTimeout(() => {
@@ -394,9 +499,10 @@ function centerAnimation(x, random) {
         wonAnimal.style.display = 'none';
         wonAnimal.src = '';
         coinDropAudio.play();
-        canStart = true;
         updateQuitConBtn();
-      }, 1000 * 5);
+        removeCircleAnimation('win', 'lose');
+        canStart = true;
+      }, 1000 * 7);
     } else {
       if (i < 31) {
         i++;
@@ -435,6 +541,7 @@ function calculateWinOrLose(i) {
     winText.textContent = 'Win';
     winText.style.color = '#3fff00';
     win.textContent = won;
+    addCircleAnimation('win');
   } else {
     // winLoseContainer.firstElementChild.textContent = `Sorry! You lose ${Math.abs(
     //   won
@@ -443,9 +550,10 @@ function calculateWinOrLose(i) {
     winText.style.color = '#FF2400';
 
     win.textContent = Math.abs(won);
+    addCircleAnimation('lose');
   }
   wonAnimal.style.display = 'block';
-  wonAnimal.src = wonAnimalSrc[indexMap[i]];
+  wonAnimal.src = winAnimalSrc[indexMap[i]].gif;
   setTimeout(() => {
     if (won > 0) {
       winAudio.play();
