@@ -380,7 +380,7 @@ startBtn.addEventListener('click', () => {
   let random = Math.floor(Math.random() * centerImg.length - 1);
   userCoinBeforeBet = userCoin;
   canBet = true;
-  let count = 5;
+  let count = 30;
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
 
@@ -484,6 +484,8 @@ function centerAnimation(x, random) {
       historyCon.style.display = 'flex';
 
       historyCon.append(addWinAnimal(winHistory[winHistory.length - 1]));
+      wonAnimal.style.display = 'block';
+      wonAnimal.src = winAnimalSrc[indexMap[i]].gif;
       calculateWinOrLose(i);
 
       setTimeout(() => {
@@ -552,8 +554,6 @@ function calculateWinOrLose(i) {
     win.textContent = Math.abs(won);
     addCircleAnimation('lose');
   }
-  wonAnimal.style.display = 'block';
-  wonAnimal.src = winAnimalSrc[indexMap[i]].gif;
   setTimeout(() => {
     if (won > 0) {
       winAudio.play();
