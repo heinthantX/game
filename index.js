@@ -535,7 +535,7 @@ function calculateWinOrLose(i) {
   // clonedBetList = JSON.parse(JSON.stringify(bet.betList));
   if (won == 0) {
     winText.textContent = 'Win';
-    winText.style.color = '#fff';
+    winText.style.color = '#3fff00';
     win.textContent = 0;
     // winLoseContainer.firstElementChild.textContent = 'Draw game! Try again.';
   } else if (won > 0) {
