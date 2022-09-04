@@ -79,6 +79,14 @@ const setSoundSetting = () => {
   volumeControl.value = soundSetting.volume;
   volumeBarFunction(volumeControl.value);
 };
+let played = false;
+document.addEventListener('click', () => {
+  if (!played) {
+    startAudio.play();
+    played = true;
+    setSoundSetting();
+  }
+});
 setSoundSetting();
 
 function musicControlFunction() {
@@ -420,14 +428,6 @@ Object.freeze(indexMap);
 // const aqua = [4, 12, 20, 28, 5, 6, 7, 9, 10, 11, 13, 14, 15, 17, 18, 19];
 const land = [0, 1, 2, 3];
 const aqua = [4, 5, 6, 7];
-
-// let played = false;
-// document.addEventListener('click', () => {
-//   if (!played) {
-//     startAudio.play();
-//     played = true;
-//   }
-// });
 
 let canBet = false;
 for (let i = 0; i < 12; i++) {
