@@ -5,6 +5,10 @@ html {
   font-size: 16px;
 }
 
+:root {
+  --hell: 70%;
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -29,7 +33,7 @@ body {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .game {
@@ -674,7 +678,6 @@ body {
     rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px,
     rgb(0 0 0 / 9%) 0px 32px 16px;
   cursor: pointer;
-  z-index: 1;
 }
 .game__container-right .get-coin img {
   width: 15%;
@@ -725,10 +728,10 @@ body {
     color: rgb(253, 38, 38);
   }
   49.9% {
-    color: #ec5300;
-    text-shadow: 0 0 7px #ec5300, 0 0 10px #ec5300, 0 0 21px #ec5300,
-      0 0 42px #ec5300, 0 0 82px #ec5300, 0 0 92px #ec5300, 0 0 102px #ec5300,
-      0 0 151px #ec5300;
+    color: #ff2e16;
+    text-shadow: 0 0 7px #ff0a01, 0 0 10px #ff0a01, 0 0 21px #ff0a01,
+      0 0 42px #ff0a01, 0 0 82px #ff0a01, 0 0 92px #ff0a01, 0 0 102px #ff0a01,
+      0 0 151px #ff0a01;
   }
   50% {
     color: #9efd10;
@@ -749,10 +752,10 @@ body {
     color: rgb(253, 38, 38);
   }
   100% {
-    color: #ec2400;
-    text-shadow: 0 0 7px #ec2400, 0 0 10px #ec2400, 0 0 21px #ec2400,
-      0 0 42px #ec2400, 0 0 82px #ec2400, 0 0 92px #ec2400, 0 0 102px #ec2400,
-      0 0 151px #ec2400;
+    color: #ff2244;
+    text-shadow: 0 0 7px #ff2244, 0 0 10px #ff2244, 0 0 21px #ff2244,
+      0 0 42px #ff2244, 0 0 82px #ff2244, 0 0 92px #ff2244, 0 0 102px #ff2244,
+      0 0 151px #ff2244;
   }
 }
 /* ff0a01 */
@@ -872,65 +875,45 @@ body {
 }
 
 #historyCon {
-  /* padding: 9px 20px; */
-  height: 80px;
-  display: none;
-  justify-content: center;
-  align-items: center;
+  padding: 9px 20px;
   border-radius: 25px;
   box-sizing: border-box;
   background: rgb(255, 230, 0);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  display: none;
   gap: 10px;
 }
 
 #historyCon img {
-  height: 80px;
-  width: 80px;
+  width: 55px;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
-.bird {
-  height: 79% !important;
-  width: auto !important;
-  margin: 0px 9px;
-}
-
-.whale {
-  height: 90% !important;
-  width: auto !important;
-  margin: 9px 0 0 9px;
-}
-
-.gameStop {
-  position: absolute;
+/* .win-lose-container {
   width: 55%;
-  height: 42%;
-  padding: 5px 20px;
+  height: 40%;
   text-align: center;
-  flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  border-radius: 35px;
+  border-radius: 40px;
   background: linear-gradient(
     65deg,
     rgba(4, 125, 180, 0.5),
     rgba(4, 125, 180, 0.1)
   );
+  transform: scale(0);
   display: none;
-  box-sizing: border-box;
-  animation: fadeIn 500ms ease-in-out forwards;
-}
+} */
 
-.gameStop p {
+/* .win-lose-container p {
   background: linear-gradient(45deg, #ffe600, #ff7b01);
   background-clip: text;
   -webkit-background-clip: text;
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
-}
+} */
 
 .img {
   position: relative;
@@ -1035,7 +1018,6 @@ body {
   font-size: 40px;
   font-weight: 900;
   box-sizing: border-box;
-  cursor: pointer;
 }
 
 .coin-con img {
@@ -1109,7 +1091,7 @@ body {
 }
 
 .buttonAnimate {
-  animation: btnAnimate 200ms ease-in;
+  animation: btnAnimate 300ms ease-in;
 }
 
 .profileContainer {
@@ -1130,8 +1112,7 @@ body {
 
 .profileBackBtn,
 .settingBackBtn,
-.achievementBackBtn,
-.aboutBackBtn {
+.achievementBackBtn {
   position: absolute;
   top: 25px;
   left: 30px;
@@ -1239,8 +1220,7 @@ body {
 }
 
 .settingContainer,
-.achievementContainer,
-.aboutContainer {
+.achievementContainer {
   position: relative;
   display: none;
   background-color: white;
@@ -1500,12 +1480,11 @@ body {
 }
 .noBtn:active:focus {
   box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset,
-    rgba(203, 1, 1, 0.5) 0 0 0 0.2rem;
+    rgba(255, 9, 9, 0.3) 0 0 0 0.2rem;
 }
 
 .noBtn,
-.yesBtn,
-.okBtn {
+.yesBtn {
   appearance: button;
   background-color: #4d4ae8;
   background-image: linear-gradient(
@@ -1689,7 +1668,7 @@ body {
 }
 
 .wrapper {
-  width: 12.5rem;
+  width: 210px;
   height: 60px;
   position: absolute;
   left: 50%;
@@ -1773,71 +1752,9 @@ body {
   top: 75px;
   font-size: 1.9rem;
   font-weight: 400;
-  letter-spacing: 0.4rem;
+  letter-spacing: 5px;
   color: #fff;
   left: 15%;
-}
-
-.aboutContainer {
-  justify-content: center;
-}
-.aboutContainer .logo {
-  width: 9.4rem;
-  margin-bottom: 0.5rem;
-}
-.aboutContainer .items {
-  display: flex;
-  flex-direction: column;
-  gap: 1.3rem;
-}
-
-.aboutContainer h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-}
-
-.aboutContainer h2,
-.aboutContainer h4 {
-  background: linear-gradient(to bottom, #ffe600, #ff7b01);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -moz-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-text-fill-color: transparent;
-  margin-bottom: 0.25rem;
-}
-
-.aboutContainer p {
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: rgba(0, 0, 0, 0.55);
-}
-
-.aboutContainer h4 {
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.shake {
-  animation: shake 150ms;
-}
-
-@keyframes shake {
-  0% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(4px);
-  }
-  50% {
-    transform: translateX(-4px);
-  }
-  75% {
-    transform: translateX(4px);
-  }
-  100% {
-    transform: translateX(0);
-  }
 }
 
 @media (min-width: 1400px) {

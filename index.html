@@ -20,6 +20,17 @@
     <div id="historyCon"></div>
     <section class="container">
       <section class="game">
+        <div class="loading-screen">
+          <div class="wrapper">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <span>Loading</span>
+          </div>
+        </div>
         <div class="menu-board__container">
           <div class="menu-first_con">
             <div class="menu-controls">
@@ -198,6 +209,25 @@
             <p>About Betting Slots</p>
           </div>
           <i class="settingBackBtn fa-solid fa-caret-left"></i>
+        </div>
+
+        <div class="aboutContainer">
+          <img class="logo" src="./assets/images/gameicon copy 2.png" alt="" />
+          <div class="items">
+            <div>
+              <h2>Betting Slots</h2>
+              <p>Version 1.0.0</p>
+            </div>
+            <div>
+              <h4>Version</h4>
+              <p>1.0.0_3eb6f01_210926</p>
+            </div>
+            <div>
+              <h4>Engine version</h4>
+              <p>1065</p>
+            </div>
+          </div>
+          <i class="aboutBackBtn fa-solid fa-caret-left"></i>
         </div>
 
         <div class="profileContainer">
@@ -630,12 +660,19 @@
               </div>
               <img
                 id="wonAnimal"
-                src="./assets/images/animation-gif/dog.gif"
+                src="./assets/images/animation-gif/monkey.gif"
                 alt=""
               />
-              <!-- <div class="win-lose-container">
-                <p>Yo! YOU WIN 7 COINS.</p>
-              </div> -->
+              <img
+                id="loseAnimationGif"
+                src="./assets/images/animation-gif/loseAnimation.gif"
+                alt=""
+              />
+
+              <div class="gameStop">
+                <p>Game stopped! You need to bet in every game...</p>
+                <button class="okBtn button">OK</button>
+              </div>
               <div class="quitConfirm">
                 <p>Do you want to quit?</p>
                 <div>
@@ -749,7 +786,9 @@
               <img src="./assets/images/btn/cross.png" id="clear-btn" alt="" />
             </div>
             <div class="quitBtn_con">
-              <div id="quitBtn">Quit</div>
+              <div id="quitBtn">
+                <span>Quit</span>
+              </div>
             </div>
             <div class="get-coin">
               <img src="./assets/images/btn/coin1.png" alt="" />
