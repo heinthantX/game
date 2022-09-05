@@ -874,6 +874,7 @@ getCoin.onclick = (e) => {
 // };
 
 quitBtn.addEventListener('click', (e) => {
+  clickAudio.play();
   if (canStart) {
     quitBtn.classList.add('buttonAnimate');
   } else {
