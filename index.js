@@ -47,6 +47,9 @@ const aboutBackBtn = document.querySelector('.aboutBackBtn');
 const achievementContainer = document.querySelector('.achievementContainer');
 const achievementBackBtn = document.querySelector('.achievementBackBtn');
 const gameStop = document.querySelector('.gameStop');
+const bettingTime = document.querySelector('.bettingTime');
+const bettingTimePlusBtn = document.querySelector('.bettingTimePlusBtn');
+const bettingTimeMinusBtn = document.querySelector('.bettingTimeMinusBtn');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -66,28 +69,30 @@ const coinDropAudio = new Audio('./assets/audio/CoinGold AMA01_88_1.wav');
 const lossAudio = new Audio('./assets/audio/Stage Failed.wav');
 const winAudio = new Audio('./assets/audio/Happy Win Game.wav');
 
-let soundSetting = JSON.parse(localStorage.getItem('soundSetting')) || {
+let setting = JSON.parse(localStorage.getItem('setting')) || {
   isMusicOff: false,
   volume: 50,
+  bettingTime: 30,
 };
 
 let isMuted = false;
-const setSoundSetting = () => {
-  musicBtn.checked = soundSetting.isMusicOff;
+const setSetting = () => {
+  musicBtn.checked = setting.isMusicOff;
   musicControlFunction();
   // volumeBar
-  volumeControl.value = soundSetting.volume;
+  volumeControl.value = setting.volume;
   volumeBarFunction(volumeControl.value);
+  bettingTime.textContent = setting.bettingTime;
 };
 let played = false;
 document.addEventListener('click', () => {
   if (!played) {
     startAudio.play();
     played = true;
-    setSoundSetting();
+    setSetting();
   }
 });
-setSoundSetting();
+setSetting();
 
 function musicControlFunction() {
   if (musicBtn.checked) {
@@ -100,8 +105,8 @@ function musicControlFunction() {
     startAudio.play();
     isMuted = false;
   }
-  soundSetting.isMusicOff = musicBtn.checked;
-  localStorage.setItem('soundSetting', JSON.stringify(soundSetting));
+  setting.isMusicOff = musicBtn.checked;
+  localStorage.setItem('setting', JSON.stringify(setting));
 }
 
 function volumeBarFunction(value) {
@@ -114,15 +119,15 @@ function volumeBarFunction(value) {
   // winAudio.volume = value / 100;
   // endAudio.volume = value / 100;
   // coinDropAudio.volume = value / 100;
-  soundSetting.volume = value;
-  localStorage.setItem('soundSetting', JSON.stringify(soundSetting));
+  setting.volume = value;
+  localStorage.setItem('setting', JSON.stringify(setting));
   if (isMuted) {
     startAudio.pause();
   }
 }
 
-// volumeControl.value = soundSetting.volume;
-// volumeControl.style.backgroundSize = soundSetting.volume + '% 100%';
+// volumeControl.value = setting.volume;
+// volumeControl.style.backgroundSize = setting.volume + '% 100%';
 
 function getImage(url) {
   return new Promise(function (resolve, reject) {
@@ -455,6 +460,31 @@ for (let i = 0; i < 12; i++) {
   //     myValue > 0 ? parseInt(jackpot.textContent) + 1 : jackpot.textContent;
   // });
 }
+bettingTimePlusBtn.onclick = () => {
+  clickAudio.play();
+  bettingTimePlusBtn.classList.add('buttonAnimate');
+  setTimeout(() => {
+    bettingTimePlusBtn.classList.remove('buttonAnimate');
+  }, 310);
+  setting.bettingTime += 5;
+  bettingTime.textContent = setting.bettingTime;
+  localStorage.setItem('setting', JSON.stringify(setting));
+};
+
+bettingTimeMinusBtn.onclick = () => {
+  clickAudio.play();
+  if (setting.bettingTime == 5) {
+    bettingTimeMinusBtn.classList.add('shake');
+  } else {
+    bettingTimeMinusBtn.classList.add('buttonAnimate');
+  }
+  setTimeout(() => {
+    bettingTimeMinusBtn.classList.remove('buttonAnimate', 'shake');
+  }, 310);
+  setting.bettingTime -= setting.bettingTime > 5 ? 5 : 0;
+  bettingTime.textContent = setting.bettingTime;
+  localStorage.setItem('setting', JSON.stringify(setting));
+};
 
 let intervalId;
 let interval2Id;
@@ -463,18 +493,21 @@ let canStart = true;
 let userCoinBeforeBet;
 startBtn.addEventListener('click', () => {
   clickAudio.play();
-  startBtn.classList.add('buttonAnimate');
+  if (canStart) {
+    startBtn.classList.add('buttonAnimate');
+  } else {
+    startBtn.classList.add('shake');
+  }
   setTimeout(() => {
-    startBtn.classList.remove('buttonAnimate');
+    startBtn.classList.remove('buttonAnimate', 'shake');
   }, 310);
-  gameStop.style.display = 'none';
   if (intervalId || !canStart) return;
   canStart = false;
   quitConfirm.style.display = 'none';
   let random = Math.floor(Math.random() * centerImg.length - 1);
   userCoinBeforeBet = userCoin;
   canBet = true;
-  let count = 2;
+  let count = setting.bettingTime;
   const circleEle = document.getElementById('circle');
   const secondSpan = document.querySelector('#count-down span');
 
@@ -486,18 +519,18 @@ startBtn.addEventListener('click', () => {
     countDown.style.display = 'block';
     let radius = circleEle.r.baseVal.value;
     let circumference = radius * 2 * Math.PI;
-    let barLength = (count * circumference) / 30;
+    let barLength = (count * circumference) / setting.bettingTime;
     circleEle.setAttribute('stroke-dasharray', barLength + ' ' + circumference);
-    if (count == 30) {
+    if (count == setting.bettingTime) {
       clockAudio.load();
       clockAudio.play();
       if (!isMuted) {
         startAudio.pause();
       }
     }
-    if (count == 10) {
-      circleEle.style.stroke = '#CB0101';
-      secondSpan.style.color = '#CB0101';
+    if (count == Math.floor(setting.bettingTime / 3)) {
+      circleEle.style.stroke = 'red';
+      secondSpan.style.color = 'red';
     }
     if (!bet.total() && count == 0) {
       clockAudio.pause();
@@ -506,7 +539,6 @@ startBtn.addEventListener('click', () => {
       countDown.style.display = 'none';
       gameStop.style.display = 'flex';
       canBet = false;
-      canStart = true;
 
       const okBtn = document.querySelector('.okBtn');
       okBtn.onclick = () => {
@@ -514,6 +546,7 @@ startBtn.addEventListener('click', () => {
         if (!isMuted) {
           startAudio.play();
         }
+        canStart = true;
       };
       return;
     } else if (count == 0) {
@@ -585,7 +618,7 @@ function centerAnimation(x, random) {
     } else {
       centerImg[31].classList.remove('animate');
     }
-    if (typeof random == 'number' && random + 2 > i && random - 2 < i) {
+    if (typeof random == 'number' && random + 4 > i && random - 4 < i) {
       clearInterval(interval2Id);
       let animateId = setInterval(() => {
         if (centerImg[i].className.includes('animate')) {
@@ -746,6 +779,9 @@ menuPlayBtn.addEventListener('click', () => {
               profileContainer.style.display = 'none';
               loadingBar.classList.remove('loadingAfterDoneDownload');
               gameContainer.style.display = 'flex';
+              // if (historyCon.firstElementChild) {
+              //   console.log('hello');
+              // }
               firstStart = false;
               setTimeout(() => {
                 playBtnClicked = false;
@@ -761,6 +797,9 @@ menuPlayBtn.addEventListener('click', () => {
       profileContainer.style.display = 'none';
       gameContainer.style.display = 'flex';
       playBtnClicked = false;
+    }
+    if (historyCon.firstElementChild) {
+      historyCon.style.display = 'flex';
     }
   }, 310);
 });
@@ -850,6 +889,7 @@ quitBtn.addEventListener('click', (e) => {
     gameContainer.style.display = 'none';
     menuBoardContainer.style.display = 'flex';
     quitConfirm.style.display = 'none';
+    historyCon.style.display = 'none';
   };
   noBtn.onclick = () => {
     quitConfirm.style.display = 'none';

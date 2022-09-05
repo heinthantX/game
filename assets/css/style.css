@@ -3,6 +3,7 @@
 html {
   font-family: 'Eczar', serif;
   font-size: 16px;
+  user-select: none;
 }
 
 body {
@@ -58,7 +59,7 @@ body {
 .left__circle i,
 .right__circle i {
   font-size: 16px;
-  color: red;
+  color: rgb(253, 38, 38);
 }
 
 .right__circle {
@@ -723,12 +724,13 @@ body {
 @keyframes drawAnimation {
   0% {
     color: rgb(253, 38, 38);
+    text-shadow: initial;
   }
   49.9% {
-    color: #ec5300;
-    text-shadow: 0 0 7px #ec5300, 0 0 10px #ec5300, 0 0 21px #ec5300,
-      0 0 42px #ec5300, 0 0 82px #ec5300, 0 0 92px #ec5300, 0 0 102px #ec5300,
-      0 0 151px #ec5300;
+    color: #ff0000;
+    text-shadow: 0 0 0.5rem #ff0000, 0 0 1rem #ff0000, 0 0 1.5rem #ff0000,
+      0 0 2.5rem #ff0000, 0 0 4rem #ff0000, 0 0 5.5rem #ff0000, 0 0 6rem #ff0000,
+      0 0 9rem #ff0000;
   }
   50% {
     color: #9efd10;
@@ -749,10 +751,9 @@ body {
     color: rgb(253, 38, 38);
   }
   100% {
-    color: #ec2400;
-    text-shadow: 0 0 7px #ec2400, 0 0 10px #ec2400, 0 0 21px #ec2400,
-      0 0 42px #ec2400, 0 0 82px #ec2400, 0 0 92px #ec2400, 0 0 102px #ec2400,
-      0 0 151px #ec2400;
+    color: red;
+    text-shadow: 0 0 7px red, 0 0 10px red, 0 0 21px red, 0 0 42px red,
+      0 0 82px red, 0 0 92px red, 0 0 102px red, 0 0 151px red;
   }
 }
 /* ff0a01 */
@@ -1266,7 +1267,7 @@ body {
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
-  margin-bottom: 25px;
+  margin-bottom: 2%;
 }
 
 .settingContainer > div span {
@@ -1282,17 +1283,35 @@ body {
 }
 
 .settingContainer > div {
+  width: 100%;
   display: flex;
   gap: 50px;
 }
+/* .bettingTimeCon {
+  display: flex;
+  gap: 50px;
+} */
+
+/* .bettingTimeCon > div {
+  flex: 1;
+} */
 
 .settingContainer > div > div {
+  width: 50%;
   flex: 1;
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+}
+.right {
+  justify-content: flex-start !important;
+}
+
+.center {
+  justify-content: center !important;
 }
 
 .settingContainer .volCon {
-  width: 270px;
+  width: 200px;
   height: 35px;
   display: flex;
   justify-content: center;
@@ -1300,6 +1319,40 @@ body {
   box-sizing: border-box;
   border-radius: 20px;
   background: linear-gradient(to bottom, #ffe600, #ff7b01);
+}
+
+.bettingTimeCon .right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.bettingTimeCon .right > div {
+  width: 40px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.bettingTimeCon .right > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 70px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(to bottom, #ffe600, #ff7b01);
+  letter-spacing: 4px;
+  color: #fff;
+  cursor: default;
 }
 
 .volumeControl {
