@@ -50,6 +50,7 @@ const gameStop = document.querySelector('.gameStop');
 const bettingTime = document.querySelector('.bettingTime');
 const bettingTimePlusBtn = document.querySelector('.bettingTimePlusBtn');
 const bettingTimeMinusBtn = document.querySelector('.bettingTimeMinusBtn');
+const outOfCoin = document.getElementById('outOfCoin');
 
 const clickAudio = new Audio(
   './assets/audio/Jewel Button Click (mp3cut.net).wav'
@@ -328,7 +329,7 @@ let bet = {
     return total;
   },
 };
-let userCoin = 600;
+let userCoin = 10;
 const updateCoinTextContent = () => {
   coin.forEach((coin) => (coin.textContent = userCoin.toLocaleString()));
 };
@@ -443,7 +444,14 @@ for (let i = 0; i < 12; i++) {
       plusBtn[i].classList.remove('buttonAnimate');
     }, 310);
     if (!canBet) return;
-    bet.betList[i].myValue += 1;
+    if (userCoin == 0) {
+      outOfCoin.style.display = 'block';
+      outOfCoin.onclick = () => {
+        outOfCoin.style.display = 'none';
+      };
+      return;
+    }
+    bet.betList[i].myValue += userCoin ? 1 : 0;
     myValueDiv[i].firstElementChild.textContent = bet.betList[i].myValue;
     userCoin -= userCoin ? 1 : 0;
     updateCoinTextContent();
@@ -502,8 +510,15 @@ startBtn.addEventListener('click', () => {
     startBtn.classList.remove('buttonAnimate', 'shake');
   }, 310);
   if (intervalId || !canStart) return;
-  canStart = false;
   quitConfirm.style.display = 'none';
+  if (userCoin == 0) {
+    outOfCoin.style.display = 'block';
+    outOfCoin.onclick = () => {
+      outOfCoin.style.display = 'none';
+    };
+    return;
+  }
+  canStart = false;
   let random = Math.floor(Math.random() * centerImg.length - 1);
   userCoinBeforeBet = userCoin;
   canBet = true;
@@ -653,6 +668,9 @@ function centerAnimation(x, random) {
         // winLoseContainer.classList.remove('fadeIn');
         wonAnimal.style.display = 'none';
         wonAnimal.src = '';
+        winText.textContent = 'Win';
+        winText.style.color = '#fff';
+        win.textContent = 0;
         coinDropAudio.play();
         // updateQuitConBtn();
         loseAnimationGif.style.display = 'none';
