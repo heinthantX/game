@@ -216,7 +216,6 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  transition: all 3s;
 }
 
 .game__container-center-top .img1 {

@@ -329,7 +329,7 @@ let bet = {
     return total;
   },
 };
-let userCoin = 10;
+let userCoin = 100;
 const updateCoinTextContent = () => {
   coin.forEach((coin) => (coin.textContent = userCoin.toLocaleString()));
 };
@@ -570,6 +570,7 @@ startBtn.addEventListener('click', () => {
       canBet = false;
     }
     if (count < 0) {
+      outOfCoin.style.display = 'none';
       clearInterval(intervalId);
       intervalId = null;
       countDown.style.display = 'none';
