@@ -329,7 +329,7 @@ let bet = {
     return total;
   },
 };
-let userCoin = 100;
+let userCoin = 600;
 const updateCoinTextContent = () => {
   coin.forEach((coin) => (coin.textContent = userCoin.toLocaleString()));
 };
