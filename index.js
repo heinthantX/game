@@ -202,6 +202,7 @@ function gameContainerPreloader() {
     getImage('./assets/images/animation-gif/monkey.gif'),
     getImage('./assets/images/24265652.jpg'),
     getImage('./assets/images/animation-gif/loseAnimation.gif'),
+    getImage('./assets/images/animation-gif/outOfCoin.gif'),
   ]);
 }
 
